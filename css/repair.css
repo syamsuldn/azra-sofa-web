@@ -1,0 +1,1591 @@
+/* ==================================================
+   REPAIR HERO
+================================================== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+
+  color: #6b4f3a;
+
+  letter-spacing: 2px;
+}
+
+.logo:hover {
+  color: #6b4f3a;
+}
+
+.repair-hero {
+  min-height: calc(100vh - 80px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 60px 6%;
+
+  gap: 60px;
+
+  background-color: #f7f3ed;
+}
+
+
+.repair-hero-content {
+  width: 50%;
+  max-width: 600px;
+}
+
+
+.repair-hero-content .section-label {
+  display: block;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  color: #a77b5d;
+
+  margin-bottom: 20px;
+}
+
+
+.repair-hero-content h1 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: clamp(42px, 5vw, 68px);
+
+  line-height: 1.1;
+
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 25px;
+}
+
+
+.repair-hero-content h1 span {
+  display: block;
+
+  color: #6b4f3a;
+}
+
+
+.repair-hero-content > p {
+  max-width: 520px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 18px;
+
+  line-height: 1.7;
+
+  color: #5c554f;
+
+  margin-bottom: 35px;
+}
+
+
+/* ================= HERO BUTTONS ================= */
+
+.repair-hero .hero-buttons {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+
+.repair-hero .hero-buttons a {
+  text-decoration: none;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  padding: 14px 24px;
+
+  border-radius: 30px;
+
+  transition: all 0.3s ease;
+}
+
+
+.repair-hero .btn-primary {
+  background-color: #a77b5d;
+
+  color: white;
+}
+
+
+.repair-hero .btn-primary:hover {
+  background-color: #6b4f3a;
+
+  transform: translateY(-3px);
+}
+
+
+.repair-hero .btn-secondary {
+  border: 1px solid #6b4f3a;
+
+  color: #6b4f3a;
+}
+
+
+.repair-hero .btn-secondary:hover {
+  background-color: #6b4f3a;
+
+  color: white;
+
+  transform: translateY(-3px);
+}
+
+
+/* ================= HERO IMAGE ================= */
+
+.repair-hero-image {
+  width: 50%;
+  max-width: 600px;
+
+  overflow: hidden;
+
+  border-radius: 30px;
+}
+
+
+.repair-hero-image img {
+  width: 100%;
+
+  aspect-ratio: 4 / 3;
+
+  object-fit: cover;
+
+  display: block;
+
+  transition: transform 0.5s ease;
+}
+
+
+.repair-hero-image:hover img {
+  transform: scale(1.02);
+}
+
+/* ==================================================
+   REPAIR SERVICES
+================================================== */
+
+.repair-services {
+  padding: 100px 6%;
+
+  background-color: #fffdf9;
+}
+
+
+/* ================= HEADING ================= */
+
+.repair-services .section-heading {
+  max-width: 750px;
+
+  margin-bottom: 50px;
+}
+
+
+.repair-services .section-heading .section-label {
+  display: block;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  color: #a77b5d;
+
+  margin-bottom: 15px;
+}
+
+
+.repair-services .section-heading h2 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: clamp(32px, 4vw, 52px);
+
+  line-height: 1.15;
+
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 20px;
+}
+
+
+.repair-services .section-heading h2 span {
+  color: #6b4f3a;
+}
+
+
+.repair-services .section-heading p {
+  max-width: 600px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 17px;
+
+  line-height: 1.7;
+
+  color: #5c554f;
+
+  margin: 0;
+}
+
+
+/* ================= GRID ================= */
+
+.repair-services-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 25px;
+}
+
+
+/* ================= CARD ================= */
+
+.repair-service-card {
+  padding: 35px;
+
+  background-color: #f7f3ed;
+
+  border-radius: 25px;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.repair-service-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 15px 35px rgba(37, 35, 33, 0.08);
+}
+
+
+/* ================= NUMBER ================= */
+
+.repair-service-number {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  color: #a77b5d;
+
+  margin-bottom: 25px;
+}
+
+
+/* ================= TITLE ================= */
+
+.repair-service-card h3 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 22px;
+
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 12px;
+}
+
+
+/* ================= DESCRIPTION ================= */
+
+.repair-service-card p {
+  font-family: 'Playfair Display', serif;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+
+  color: #5c554f;
+
+  margin: 0;
+}
+
+/* ================= BEFORE & AFTER HEADING ================= */
+
+.repair-before-after {
+  padding: 100px 6%;
+  background-color: #f7f3ed;
+}
+
+.repair-before-after .section-heading {
+  max-width: 700px;
+  margin-bottom: 45px;
+}
+
+.repair-before-after .section-heading .section-label {
+  display: block;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  color: #a77b5d;
+
+  margin-bottom: 15px;
+}
+
+.repair-before-after .section-heading h2 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.15;
+
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 20px;
+}
+
+.repair-before-after .section-heading h2 span {
+  color: #6b4f3a;
+}
+
+.repair-before-after .section-heading p {
+  max-width: 600px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 17px;
+  line-height: 1.7;
+
+  color: #5c554f;
+
+  margin: 0;
+}
+
+/* ==================================================
+   BEFORE & AFTER SLIDER
+================================================== */
+
+.repair-before-after .before-after-slider {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  overflow: hidden;
+
+  border-radius: 25px;
+
+  cursor: ew-resize;
+
+  touch-action: none;
+  user-select: none;
+}
+
+
+/* ================= AFTER IMAGE ================= */
+
+.repair-before-after .after-image {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  user-select: none;
+  -webkit-user-drag: none;
+
+  pointer-events: none;
+}
+
+
+/* ================= BEFORE CONTAINER ================= */
+
+.repair-before-after .before-image-container {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 50%;
+  height: 100%;
+
+  overflow: hidden;
+
+  z-index: 2;
+}
+
+
+/* ================= BEFORE IMAGE ================= */
+
+.repair-before-after .before-image {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: cover;
+
+  display: block;
+
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* ================= SLIDER LINE ================= */
+
+.repair-before-after .slider-line {
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 3px;
+  height: 100%;
+
+  background-color: white;
+
+  transform: translateX(-50%);
+
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+
+/* ================= SLIDER BUTTON ================= */
+
+.repair-before-after .slider-button {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translate(-50%, -50%);
+
+  background-color: white;
+
+  color: #6b4f3a;
+
+  border-radius: 50%;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.15);
+
+  z-index: 4;
+
+  pointer-events: none;
+}
+
+
+/* ================= LABEL ================= */
+
+.repair-before-after .before-label,
+.repair-before-after .after-label {
+  position: absolute;
+
+  top: 20px;
+
+  padding: 7px 12px;
+
+  background-color: rgba(37, 35, 33, 0.65);
+
+  color: white;
+
+  border-radius: 20px;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+
+  z-index: 5;
+
+  pointer-events: none;
+
+  opacity: 1;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+/* ================= LABEL FADE ================= */
+
+.repair-before-after .before-label.label-hidden {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.repair-before-after .after-label.label-hidden {
+  opacity: 0;
+  transform: translateX(8px);
+}
+
+
+.repair-before-after .before-label {
+  left: 20px;
+}
+
+
+.repair-before-after .after-label {
+  right: 20px;
+}
+
+
+/* ================= INFO ================= */
+
+.repair-before-after .before-after-info {
+  max-width: 1100px;
+
+  margin: 25px auto 0;
+}
+
+.repair-before-after .before-after-info h3 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 22px;
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 8px;
+}
+
+.repair-before-after .before-after-info p {
+  font-family: 'Playfair Display', serif;
+
+  font-size: 16px;
+  line-height: 1.6;
+
+  color: #5c554f;
+
+  margin: 0;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 600px) {
+
+  .repair-before-after {
+    padding: 80px 6%;
+  }
+
+  .repair-before-after .before-after-slider {
+    border-radius: 18px;
+  }
+
+  .repair-before-after .slider-button {
+    width: 40px;
+    height: 40px;
+
+    font-size: 16px;
+  }
+
+  .repair-before-after .before-label,
+  .repair-before-after .after-label {
+    top: 12px;
+
+    font-size: 9px;
+  }
+
+  .repair-before-after .before-label {
+    left: 12px;
+  }
+
+  .repair-before-after .after-label {
+    right: 12px;
+  }
+
+}
+
+/* ==================================================
+   REPAIR PROCESS
+================================================== */
+
+.repair-process {
+  padding: 100px 6%;
+  background-color: #f7f3ed;
+}
+
+
+/* ================= HEADING ================= */
+
+.repair-process .section-heading {
+  max-width: 700px;
+  margin-bottom: 55px;
+}
+
+.repair-process .section-heading .section-label {
+  display: block;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  color: #a77b5d;
+
+  margin-bottom: 15px;
+}
+
+.repair-process .section-heading h2 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.15;
+
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 20px;
+}
+
+.repair-process .section-heading h2 span {
+  color: #6b4f3a;
+}
+
+.repair-process .section-heading p {
+  max-width: 600px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 17px;
+  line-height: 1.7;
+
+  color: #5c554f;
+
+  margin: 0;
+}
+
+
+/* ================= PROCESS WRAPPER ================= */
+
+.repair-process-wrapper {
+  display: flex;
+  align-items: flex-start;
+
+  width: 100%;
+}
+
+
+/* ================= PROCESS ITEM ================= */
+
+.repair-process-item {
+  flex: 1;
+}
+
+.repair-process-number {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #a77b5d;
+  border-radius: 50%;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #a77b5d;
+
+  margin-bottom: 25px;
+}
+
+.repair-process-item h3 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 21px;
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 12px;
+}
+
+.repair-process-item p {
+  max-width: 230px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  color: #5c554f;
+
+  margin: 0;
+}
+
+
+/* ================= PROCESS LINE ================= */
+
+.repair-process-line {
+  width: 60px;
+  height: 1px;
+
+  margin-top: 25px;
+
+  background-color: #c9b8a5;
+
+  flex-shrink: 0;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+  .repair-process-wrapper {
+    flex-direction: column;
+
+    gap: 35px;
+  }
+
+  .repair-process-line {
+    display: none;
+  }
+
+  .repair-process-item p {
+    max-width: 500px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .repair-process {
+    padding: 80px 6%;
+  }
+
+}
+
+/* ==================================================
+   REPAIR CONSULTATION
+================================================== */
+
+.repair-consultation {
+  padding: 100px 6%;
+  background-color: #fffdf9;
+}
+
+.repair-consultation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+
+  gap: 80px;
+}
+
+
+/* ================= CONTENT ================= */
+
+.repair-consultation-content {
+  max-width: 550px;
+}
+
+.repair-consultation-content .section-label {
+  display: block;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  color: #a77b5d;
+
+  margin-bottom: 15px;
+}
+
+.repair-consultation-content h2 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.15;
+
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 20px;
+}
+
+.repair-consultation-content h2 span {
+  color: #6b4f3a;
+}
+
+.repair-consultation-content > p {
+  max-width: 500px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 17px;
+  line-height: 1.7;
+
+  color: #5c554f;
+
+  margin-bottom: 35px;
+}
+
+
+/* ================= CONSULTATION NOTE ================= */
+
+.consultation-note {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 18px;
+
+  padding-top: 25px;
+
+  border-top: 1px solid #d8cfc5;
+}
+
+.consultation-note span {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  color: #a77b5d;
+}
+
+.consultation-note p {
+  max-width: 380px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  color: #5c554f;
+
+  margin: 0;
+}
+
+
+/* ================= UPLOAD CARD ================= */
+
+.repair-upload-card {
+  padding: 40px;
+
+  background-color: #f7f3ed;
+
+  border-radius: 25px;
+
+  box-shadow:
+    0 15px 40px rgba(37, 35, 33, 0.06);
+}
+
+.upload-header {
+  margin-bottom: 25px;
+}
+
+.upload-header h3 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 24px;
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 8px;
+}
+
+.upload-header p {
+  font-family: 'Playfair Display', serif;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  color: #5c554f;
+
+  margin: 0;
+}
+
+
+/* ================= UPLOAD AREA ================= */
+
+.upload-area {
+  width: 100%;
+  min-height: 180px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  border: 1px dashed #bda995;
+  border-radius: 18px;
+
+  background-color: #fffdf9;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.upload-area:hover {
+  border-color: #a77b5d;
+
+  background-color: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+.upload-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 12px;
+
+  border: 1px solid #a77b5d;
+  border-radius: 50%;
+
+  color: #a77b5d;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+  font-weight: 300;
+}
+
+.upload-area strong {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 5px;
+}
+
+.upload-area span {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 11px;
+
+  color: #8b8179;
+}
+
+
+/* ================= PREVIEW ================= */
+
+.upload-preview {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.preview-item {
+  position: relative;
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  background-color: #e9e2da;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.preview-remove {
+  position: absolute;
+
+  top: 7px;
+  right: 7px;
+
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: rgba(37, 35, 33, 0.75);
+
+  color: white;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.preview-remove:hover {
+  background-color: #6b4f3a;
+
+  transform: scale(1.08);
+}
+
+
+/* ================= FORM FIELD ================= */
+
+.upload-field {
+  margin-top: 25px;
+}
+
+.upload-field label {
+  display: block;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #252321;
+
+  margin-bottom: 10px;
+}
+
+.upload-field textarea {
+  width: 100%;
+
+  padding: 15px;
+
+  border: 1px solid #d2c7bc;
+  border-radius: 12px;
+
+  background-color: #fffdf9;
+
+  color: #252321;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  resize: vertical;
+
+  outline: none;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.upload-field textarea:focus {
+  border-color: #a77b5d;
+
+  box-shadow:
+    0 0 0 3px rgba(167, 123, 93, 0.10);
+}
+
+.upload-field textarea::placeholder {
+  color: #9b9188;
+}
+
+
+/* ================= SUBMIT ================= */
+
+.repair-submit {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 20px;
+
+  padding: 15px 24px;
+
+  border: none;
+  border-radius: 30px;
+
+  background-color: #a77b5d;
+  color: white;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.repair-submit:hover {
+  background-color: #6b4f3a;
+
+  transform: translateY(-3px);
+}
+
+.repair-submit span {
+  font-size: 18px;
+}
+
+
+/* ================= INFO ================= */
+
+.upload-info {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 10px;
+  line-height: 1.5;
+
+  text-align: center;
+
+  color: #8b8179;
+
+  margin-top: 15px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+  .repair-consultation-container {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+  }
+
+  .repair-consultation-content {
+    max-width: 700px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .repair-consultation {
+    padding: 80px 6%;
+  }
+
+  .repair-upload-card {
+    padding: 25px;
+  }
+
+  .upload-preview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .repair-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .repair-services {
+    padding: 80px 6%;
+  }
+
+  .repair-services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .repair-service-card {
+    padding: 30px;
+  }
+
+}
+
+/* ================= VALIDATION ================= */
+
+.repair-validation {
+  min-height: 20px;
+
+  margin-top: 12px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  line-height: 1.5;
+
+  text-align: center;
+
+  color: #a77b5d;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.repair-validation.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ================= REPAIR CTA ================= */
+
+.custom-cta {
+  padding: 100px 6%;
+
+  text-align: center;
+
+  background-color: #6b4f3a;
+}
+
+.custom-cta-content {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.custom-cta .section-label {
+  display: block;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  color: #d8b994;
+
+  margin-bottom: 15px;
+}
+
+.custom-cta h2 {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.15;
+
+  font-weight: 600;
+
+  color: white;
+
+  margin-bottom: 20px;
+}
+
+.custom-cta h2 span {
+  color: #d8b994;
+}
+
+.custom-cta p {
+  max-width: 600px;
+
+  margin: 0 auto 30px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 17px;
+  line-height: 1.7;
+
+  color: #eadfd5;
+}
+
+.custom-cta .btn-primary {
+  display: inline-block;
+
+  text-decoration: none;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  padding: 14px 26px;
+
+  border-radius: 30px;
+
+  background-color: #f7f3ed;
+
+  color: #6b4f3a;
+
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.custom-cta .btn-primary:hover {
+  background-color: white;
+
+  transform: translateY(-3px);
+}
+
+/* ================= BACK TO TOP - CTA MODE ================= */
+
+#backToTop.cta-mode {
+    background-color: #f7f3ed !important;
+    color: #6b4f3a !important;
+}
+
+#backToTop.cta-mode:hover {
+    background-color: #ffffff !important;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  padding: 30px 6%;
+
+  text-align: center;
+
+  background-color: #252321;
+}
+
+.footer p {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 11px;
+  letter-spacing: 0.5px;
+
+  color: #cfc6bd;
+
+  margin: 0;
+}
+
+/* ================================
+   RESPONSIVE NAVBAR
+================================ */
+
+.menu-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: #6b4f3a;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 0 4%;
+    }
+
+    .nav-menu {
+        gap: 18px;
+    }
+
+    .nav-menu a {
+        font-size: 13px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        height: 70px;
+        padding: 0 5%;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 20px;
+        letter-spacing: 1.5px;
+        gap: 8px;
+    }
+
+    .logo img {
+        width: 36px;
+        height: 36px;
+    }
+
+    /* Hamburger muncul */
+    .menu-toggle {
+        display: flex;
+        position: relative;
+        z-index: 1001;
+    }
+
+    /* Menu disembunyikan */
+    .nav-menu {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        gap: 0;
+
+        background-color: #f7f3ed;
+
+        padding: 15px 5% 25px;
+
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease,
+            transform 0.3s ease;
+
+        z-index: 1000;
+    }
+
+    /* Menu ketika dibuka */
+    .nav-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-menu a {
+        width: 100%;
+        padding: 13px 10px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    /* Tombol konsultasi */
+    .nav-menu .btn-konsultasi {
+        width: auto;
+        margin-top: 8px;
+        padding: 11px 22px;
+    }
+
+
+    /* Animasi hamburger menjadi X */
+
+    .menu-toggle.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+}

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AZRA SOFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+
+<body>
+    <!-- Navigation Bar Start -->
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            <img src="assets/image/logo/Azra Sofa logo.png" alt="AZRA SOFA Logo">
+            AZRA SOFA
+        </a>
+
+        <div class="nav-menu">
+
+            <a href="index.html">Home</a>
+
+            <a href="custom.html">Custom Sofa</a>
+
+            <a href="repair.html">Sofa Repair</a>
+
+            <a href="gallery.html">Galeri</a>
+
+            <a href="about.html">Tentang Kami</a>
+
+            <a href="contact.html" class="btn-konsultasi">
+                Konsultasi
+            </a>
+
+        </div>
+
+        <button class="menu-toggle" aria-label="Buka menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </nav>
+    <!-- Navigation Bar End -->
+
+    <!-- Content Start -->
+
+    <section class="gallery-hero">
+
+        <div class="gallery-hero-content">
+
+            <p class="section-label">
+                GALERI AZRA SOFA
+            </p>
+            <h1>
+                Sofa yang dibuat, <span>untuk ruang yang berbeda.</span>
+            </h1>
+            <p class="gallery-hero-description">
+                Lihat berbagai hasil sofa custom, reparasi, dan detail pengerjaan yang telah dikerjakan oleh Azra Sofa.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- Gallery Filter Start -->
+
+    <section class="gallery-filter">
+
+        <div class="gallery-filter-container">
+
+            <button class="gallery-filter-btn active" data-filter="all">Semua</button>
+            <button class="gallery-filter-btn" data-filter="custom">Custom Sofa</button>
+            <button class="gallery-filter-btn" data-filter="repair">Repair Sofa</button>
+            <button class="gallery-filter-btn" data-filter="details">Details</button>
+
+        </div>
+
+    </section>
+    <!-- Gallery Filter End -->
+
+    <!-- Gallery Grid Start -->
+
+    <section class="gallery-grid">
+
+        <div class="gallery-grid-container">
+
+            <div class="gallery-items" data-category="custom">
+
+                <img 
+                src="assets/image/custom-sofa/custom1.jpg"
+                alt="..."
+                data-caption="Sofa Custom Minimalis"
+                >
+
+            </div>
+
+
+            <div class="gallery-items" data-category="custom">
+
+                <img 
+                src="assets/image/custom-sofa/custom2.jpg"
+                alt="..."
+                data-caption="Sofa Custom Classic"
+                >
+
+            </div>
+
+
+            <div class="gallery-items" data-category="custom">
+
+                <img 
+                src="assets/image/custom-sofa/custom-process.jpg"
+                alt="..."
+                data-caption="Sofa Custom Process"
+                >
+
+            </div>
+
+
+            <div class="gallery-items" data-category="repair">
+
+                <img
+                src="assets/image/repair-sofa/after/after1.jpg"
+                alt="..."
+                data-caption="After Repaired"
+                >
+
+            </div>
+
+            <div class="gallery-items" data-category="repair">
+
+                <img
+                src="assets/image/repair-sofa/before/before1.jpg"
+                alt="..."
+                data-caption="Before Repair"
+                >
+
+            </div>
+
+            <div class="gallery-items" data-category="repair">
+
+                <img
+                src="assets/image/repair-sofa/repair1.jpg"
+                alt="..."
+                data-caption="Sofa Repair 1"
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- Gallery Grid End -->
+
+    <!-- Gallery Lightbox Start -->
+    <div class="gallery-lightbox">
+        <button class="lightbox-close" aria-label="Tutup">
+            &times;
+        </button>
+
+        <button class="lightbox-prev" aria-label="Foto Sebelumnya">
+            &#10094;
+        </button>
+
+        <img class="lightbox-image" src="" alt="" draggable="false">
+
+        <div class="lightbox-caption"></div>
+
+        <button class="lightbox-next" aria-label="Foto Selanjutnya">
+            &#10095;
+        </button>
+    </div>
+    <!-- Gallery Lightbox End -->
+
+    <!-- ================= GALLERY CTA ================= -->
+
+<section class="cta">
+
+    <div class="cta-content">
+
+        <p class="section-label">
+            TERINSPIRASI DARI KOLEKSI KAMI?
+        </p>
+
+        <h2>
+            Saatnya Wujudkan Sofa
+            <span>Versi Anda Sendiri.</span>
+        </h2>
+
+        <p>
+            Punya model, ukuran, atau referensi sofa yang Anda inginkan?
+            Ceritakan kepada kami dan mari wujudkan bersama Azra Sofa.
+        </p>
+
+        <a href="contact.html" class="cta-button">
+            Mulai Konsultasi →
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ================= GALLERY CTA END ================= -->
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 Azra Sofa. All Rights Reserved.
+    </p>
+
+</footer>
+
+<!-- ================= FOOTER END ================= -->
+
+    <!-- Content End -->
+    <button id="backToTop" aria-label="Kembali ke atas">
+        ↑
+    </button>
+
+    <script src="js/main.js"></script>
+    <script src="js/gallery.js"></script>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    </script>
+
+</body>
+
+</html>

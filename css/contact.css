@@ -1,0 +1,692 @@
+/* ==================================================
+   CONTACT HERO
+================================================== */
+
+.contact-hero {
+
+    min-height: calc(65vh - 80px);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 100px 6%;
+
+    text-align: center;
+
+    background-color: #f7f3ed;
+
+}
+
+
+/* ================= CONTENT ================= */
+
+.contact-hero-content {
+
+    width: 100%;
+
+    max-width: 850px;
+
+}
+
+
+/* ================= SUBTITLE ================= */
+
+.contact-hero-subtitle {
+
+    display: block;
+
+    margin-bottom: 18px;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 3px;
+
+    color: #a77b5d;
+
+}
+
+
+/* ================= HEADING ================= */
+
+.contact-hero h1 {
+
+    margin-bottom: 25px;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: clamp(42px, 5vw, 68px);
+
+    line-height: 1.1;
+
+    font-weight: 600;
+
+    color: #252321;
+
+}
+
+
+.contact-hero h1 span {
+
+    display: block;
+
+    color: #6b4f3a;
+
+}
+
+
+/* ================= DESCRIPTION ================= */
+
+.contact-hero p {
+
+    max-width: 620px;
+
+    margin: 0 auto;
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 18px;
+
+    line-height: 1.75;
+
+    color: #5c554f;
+
+}
+
+
+/* ==================================================
+   CONTACT HERO — MOBILE
+================================================== */
+
+@media (max-width: 768px) {
+
+    .contact-hero {
+
+        min-height: auto;
+
+        padding: 80px 6%;
+
+    }
+
+
+    .contact-hero-subtitle {
+
+        font-size: 11px;
+
+        letter-spacing: 2.5px;
+
+        margin-bottom: 16px;
+
+    }
+
+
+    .contact-hero h1 {
+
+        font-size: clamp(38px, 10vw, 52px);
+
+        line-height: 1.12;
+
+        margin-bottom: 22px;
+
+    }
+
+
+    .contact-hero p {
+
+        font-size: 17px;
+
+        line-height: 1.7;
+
+    }
+
+}
+
+/* ==================================================
+   CONTACT CONSULTATION
+================================================== */
+
+.contact-consultation {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    align-items: start;
+
+    gap: 80px;
+
+    padding: 110px 6%;
+
+    background-color: #ffffff;
+
+}
+
+
+/* ================= LEFT CONTENT ================= */
+
+.contact-info {
+
+    max-width: 560px;
+
+}
+
+
+.contact-info .section-label {
+
+    display: block;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 3px;
+
+    color: #a77b5d;
+
+    margin-bottom: 15px;
+
+}
+
+
+.contact-info h2 {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: clamp(34px, 4vw, 52px);
+
+    line-height: 1.15;
+
+    font-weight: 600;
+
+    color: #252321;
+
+    margin-bottom: 25px;
+
+}
+
+
+.contact-info h2 span {
+
+    display: block;
+
+    color: #6b4f3a;
+
+}
+
+
+.contact-info > p {
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    color: #5c554f;
+
+    max-width: 520px;
+
+}
+
+
+/* ================= CONTACT DETAILS ================= */
+
+.contact-details {
+
+    margin-top: 45px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 25px;
+
+}
+
+
+.contact-detail-label {
+
+    display: block;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    color: #a77b5d;
+
+    margin-bottom: 8px;
+
+}
+
+
+.contact-detail a {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    color: #252321;
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+
+}
+
+
+.contact-detail a:hover {
+
+    color: #a77b5d;
+
+}
+
+
+.contact-detail p {
+
+    margin: 0;
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 16px;
+
+    color: #5c554f;
+
+}
+
+
+/* ================= FORM ================= */
+
+.contact-form-wrapper {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    margin-left: auto;
+
+}
+
+
+.contact-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+
+}
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.form-group label {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #252321;
+
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    border: 1px solid #d8cec4;
+
+    border-radius: 8px;
+
+    background-color: #f7f3ed;
+
+    color: #252321;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+
+.form-group textarea {
+
+    resize: vertical;
+
+    min-height: 150px;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+    border-color: #a77b5d;
+
+    box-shadow:
+        0 0 0 3px rgba(167, 123, 93, 0.12);
+
+}
+
+
+/* ================= SUBMIT ================= */
+
+.contact-submit {
+
+    align-self: flex-start;
+
+    border: none;
+
+    padding: 15px 26px;
+
+    border-radius: 30px;
+
+    background-color: #a77b5d;
+
+    color: white;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+
+.contact-submit:hover {
+
+    background-color: #6b4f3a;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.15);
+
+}
+
+
+/* ==================================================
+   CONTACT CONSULTATION — MOBILE
+================================================== */
+
+@media (max-width: 768px) {
+
+    .contact-consultation {
+
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+
+        padding: 80px 6%;
+
+    }
+
+
+    .contact-form-wrapper {
+
+        max-width: none;
+
+    }
+
+
+    .contact-submit {
+
+        width: 100%;
+
+    }
+
+}
+
+/* ==================================================
+   CONTACT SERVICES
+================================================== */
+
+.contact-services {
+
+    padding: 110px 6%;
+
+    background-color: #f7f3ed;
+
+}
+
+
+/* ================= HEADER ================= */
+
+.contact-services-header {
+
+    max-width: 700px;
+
+    margin-bottom: 60px;
+
+}
+
+
+.contact-services .section-label {
+
+    display: block;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 3px;
+
+    color: #a77b5d;
+
+    margin-bottom: 15px;
+
+}
+
+
+.contact-services h2 {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: clamp(34px, 4vw, 52px);
+
+    line-height: 1.15;
+
+    font-weight: 600;
+
+    color: #252321;
+
+}
+
+
+.contact-services h2 span {
+
+    display: block;
+
+    color: #6b4f3a;
+
+}
+
+
+/* ================= GRID ================= */
+
+.contact-services-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1px;
+
+    background-color: #d8cec4;
+
+}
+
+
+/* ================= CARD ================= */
+
+.contact-service {
+
+    padding: 40px;
+
+    background-color: #ffffff;
+
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
+
+}
+
+
+.contact-service-number {
+
+    display: block;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    color: #a77b5d;
+
+    margin-bottom: 25px;
+
+}
+
+
+.contact-service h3 {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 21px;
+
+    font-weight: 600;
+
+    color: #252321;
+
+    margin-bottom: 15px;
+
+}
+
+
+.contact-service p {
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+    color: #5c554f;
+
+    margin-bottom: 25px;
+
+}
+
+
+.contact-service a {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #6b4f3a;
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+
+}
+
+
+.contact-service a:hover {
+
+    color: #a77b5d;
+
+}
+
+
+.contact-service:hover {
+
+    transform: translateY(-4px);
+
+    background-color: #fffdfb;
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 768px) {
+
+    .contact-services {
+
+        padding: 80px 6%;
+
+    }
+
+
+    .contact-services-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .contact-service {
+
+        padding: 35px 30px;
+
+    }
+
+}
+
