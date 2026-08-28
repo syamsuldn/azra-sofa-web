@@ -1,4 +1,3 @@
-```javascript
 /* ==================================================
    SUPABASE CONFIG
 ================================================== */
@@ -15,4 +14,3 @@ window.supabaseClient =
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
     );
-```
