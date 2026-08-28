@@ -1,3 +1,4 @@
+```javascript
 /* ==================================================
    SUPABASE CONFIG
 ================================================== */
@@ -9,8 +10,9 @@ const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_h2hC0bqAenFMD6ku5frLpg_Ea6jQZOH";
 
 
-const supabaseClient =
+window.supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
     );
+```
