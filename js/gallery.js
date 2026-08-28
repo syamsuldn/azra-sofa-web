@@ -6,18 +6,32 @@
    SUPABASE GALLERY READ
 ================================================== */
 
+const filterButtons =
+    document.querySelectorAll(".gallery-filter-btn");
+
+let galleryItems =
+    document.querySelectorAll(".gallery-items");
+
+const galleryContainer =
+    document.querySelector(".gallery-grid-container");
+    
+
+    /* ==================================================
+   LOAD GALLERY FROM SUPABASE
+================================================== */
+
 async function loadGalleryFromSupabase() {
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("gallery")
-        .select("*")
-        .order("created_at", {
-            ascending: true
-        });
+    const { data, error } =
+        await supabaseClient
+            .from("gallery")
+            .select("*")
+            .order("created_at", {
+                ascending: true
+            });
 
+
+    /* ================= ERROR ================= */
 
     if (error) {
 
@@ -31,39 +45,50 @@ async function loadGalleryFromSupabase() {
     }
 
 
-    console.log(
-        "✅ Data Gallery dari Supabase:",
-        data
-    );
+    /* ================= DATA ================= */
 
-
-    /* ================= CONVERT DATA ================= */
-
-    galleryData.length = 0;
-
-
-    data.forEach(item => {
-
-        galleryData.push({
+    galleryData =
+        data.map(item => ({
 
             id: item.id,
 
-            title: item.title,
+            image: item.image_url,
 
             category: item.category,
 
-            caption: item.caption,
+            categoryLabel:
+                galleryCategories[item.category] ||
+                item.category ||
+                "",
 
-            image: item.image_url
+            title:
+                item.title || "",
 
-        });
+            caption:
+                item.caption ||
+                item.title ||
+                ""
 
-    });
+        }));
+
+
+    console.log(
+        "✅ Gallery berhasil dimuat dari Supabase:",
+        galleryData
+    );
 
 
     /* ================= RENDER ================= */
 
     renderGallery();
+
+
+    /* ================= UPDATE REFERENSI ================= */
+
+    galleryItems =
+        document.querySelectorAll(
+            ".gallery-items"
+        );
 
 
     updateVisibleItems();
@@ -72,16 +97,6 @@ async function loadGalleryFromSupabase() {
     return true;
 
 }
-
-const filterButtons =
-    document.querySelectorAll(".gallery-filter-btn");
-
-let galleryItems =
-    document.querySelectorAll(".gallery-items");
-
-const galleryContainer =
-    document.querySelector(".gallery-grid-container");
-
 
 function createGalleryItem(item) {
 
@@ -235,8 +250,6 @@ function validateGalleryData() {
 
 }
 
-validateGalleryData();
-
 function validateGalleryImages() {
 
     galleryData.forEach(item => {
@@ -269,7 +282,7 @@ validateGalleryData();
 
 validateGalleryImages();
 
-renderGallery();
+loadGalleryFromSupabase();
 
 
 /* ============== ANIMATE GALLERY ================*/
@@ -1392,157 +1405,64 @@ galleryLightbox.addEventListener("click", function (event) {
 
 });
 
-// Keyboard listener
-document.addEventListener("keydown", function (event) {
-
-    // Keyboard hanya aktif ketika Lightbox terbuka
-    if (!galleryLightbox.classList.contains("active")) {
-        return;
-    }
-
-    if (event.key === "ArrowLeft") {
-
-        currentIndex--;
-
-        if (currentIndex < 0) {
-            currentIndex = visibleItems.length - 1;
-        }
-
-        showLightboxImage(currentIndex);
-
-    }
-
-    if (event.key === "ArrowRight") {
-
-        currentIndex++;
-
-        if (currentIndex >= visibleItems.length) {
-            currentIndex = 0;
-        }
-
-        showLightboxImage(currentIndex);
-
-
-    }
-
-    if (event.key === "Escape") {
-
-        galleryLightbox.classList.remove("active");
-
-    }
-
-});
-
 /* ==================================================
-   GALLERY DATA MANAGEMENT
+   GALLERY CRUD — SUPABASE
 ================================================== */
 
 
-/* ================= GET ITEM ================= */
+/* ================= READ ================= */
 
-function getGalleryItemById(id) {
+async function getGalleryItemById(id) {
 
-    return galleryData.find(
-        item => item.id === id
-    );
+    const { data, error } =
+        await supabaseClient
+            .from("gallery")
+            .select("*")
+            .eq("id", id)
+            .single();
 
-}
 
-
-/* ================= UPDATE ITEM ================= */
-
-function updateGalleryItem(id, updates) {
-
-    const item =
-        getGalleryItemById(id);
-
-    if (!item) {
+    if (error) {
 
         console.warn(
-            `⚠️ Gallery item "${id}" tidak ditemukan.`
+            `⚠️ Gagal mengambil Gallery "${id}":`,
+            error
         );
 
-        return false;
-
-    }
-
-    Object.assign(
-        item,
-        updates
-    );
-
-    updateGalleryDOM(id);
-
-    return true;
-
-}
-
-
-/* ================= UPDATE DOM ================= */
-
-function updateGalleryDOM(id) {
-
-    const item =
-        getGalleryItemById(id);
-
-    if (!item) return false;
-
-
-    const galleryItem =
-        document.querySelector(
-            `.gallery-items[data-id="${id}"]`
-        );
-
-    if (!galleryItem) {
-
-        console.warn(
-            `⚠️ Elemen Gallery "${id}" tidak ditemukan di halaman.`
-        );
-
-        return false;
+        return null;
 
     }
 
 
-    const image =
-        galleryItem.querySelector("img");
+    return {
 
-    if (!image) return false;
+        id: data.id,
 
+        image: data.image_url,
 
-    /* ================= IMAGE ================= */
+        category: data.category,
 
-    image.src =
-        item.image;
+        categoryLabel:
+            galleryCategories[data.category] ||
+            data.category ||
+            "",
 
-    image.alt =
-        item.title || "AZRA SOFA";
+        title:
+            data.title || "",
 
-    image.dataset.caption =
-        item.caption ||
-        item.title ||
-        "";
+        caption:
+            data.caption ||
+            data.title ||
+            ""
 
-
-    /* ================= CATEGORY ================= */
-
-    galleryItem.dataset.category =
-        item.category;
-
-    galleryItem.dataset.categoryLabel =
-        galleryCategories[item.category] ||
-        item.category ||
-        "";
-
-
-    return true;
+    };
 
 }
 
 
-/* ================= ADD ITEM ================= */
+/* ================= CREATE ================= */
 
-function addGalleryItem(data) {
+async function addGalleryItem(data) {
 
     /* ================= VALIDASI ================= */
 
@@ -1550,17 +1470,6 @@ function addGalleryItem(data) {
 
         console.warn(
             "⚠️ Gallery item harus memiliki ID."
-        );
-
-        return false;
-
-    }
-
-
-    if (getGalleryItemById(data.id)) {
-
-        console.warn(
-            `⚠️ Gallery ID "${data.id}" sudah digunakan.`
         );
 
         return false;
@@ -1590,56 +1499,41 @@ function addGalleryItem(data) {
     }
 
 
-    /* ================= TAMBAHKAN DATA ================= */
+    /* ================= INSERT SUPABASE ================= */
 
-    galleryData.push(data);
+    const { data: insertedData, error } =
+        await supabaseClient
+            .from("gallery")
+            .insert({
 
+                id: data.id,
 
-    /* ================= BUAT ELEMENT ================= */
+                title:
+                    data.title || "",
 
-    const galleryItem =
-        createGalleryItem(data);
+                category:
+                    data.category,
 
+                caption:
+                    data.caption ||
+                    data.title ||
+                    "",
 
-    galleryContainer.appendChild(
-        galleryItem
-    );
+                image_url:
+                    data.image
 
-
-    /* ================= UPDATE REFERENSI ================= */
-
-    galleryItems =
-        document.querySelectorAll(
-            ".gallery-items"
-        );
-
-
-    /* ================= UPDATE LIGHTBOX ================= */
-
-    updateVisibleItems();
-
-
-    return true;
-
-}
+            })
+            .select()
+            .single();
 
 
-/* ================= REMOVE ITEM ================= */
+    /* ================= ERROR ================= */
 
-function removeGalleryItem(id) {
+    if (error) {
 
-    /* ================= CARI DATA ================= */
-
-    const index =
-        galleryData.findIndex(
-            item => item.id === id
-        );
-
-
-    if (index === -1) {
-
-        console.warn(
-            `⚠️ Gallery ID "${id}" tidak ditemukan.`
+        console.error(
+            "❌ Gagal menambahkan Gallery:",
+            error
         );
 
         return false;
@@ -1647,30 +1541,36 @@ function removeGalleryItem(id) {
     }
 
 
-    /* ================= HAPUS DATA ================= */
+    /* ================= UPDATE LOCAL DATA ================= */
 
-    galleryData.splice(
-        index,
-        1
-    );
+    galleryData.push({
+
+        id: insertedData.id,
+
+        image: insertedData.image_url,
+
+        category: insertedData.category,
+
+        categoryLabel:
+            galleryCategories[insertedData.category] ||
+            insertedData.category ||
+            "",
+
+        title:
+            insertedData.title || "",
+
+        caption:
+            insertedData.caption ||
+            insertedData.title ||
+            ""
+
+    });
 
 
-    /* ================= HAPUS DOM ================= */
+    /* ================= RENDER ================= */
 
-    const galleryItem =
-        document.querySelector(
-            `.gallery-items[data-id="${id}"]`
-        );
+    renderGallery();
 
-
-    if (galleryItem) {
-
-        galleryItem.remove();
-
-    }
-
-
-    /* ================= UPDATE REFERENSI ================= */
 
     galleryItems =
         document.querySelectorAll(
@@ -1678,17 +1578,191 @@ function removeGalleryItem(id) {
         );
 
 
-    /* ================= UPDATE LIGHTBOX ================= */
-
     updateVisibleItems();
+
+
+    console.log(
+        "✅ Gallery berhasil ditambahkan:",
+        insertedData
+    );
 
 
     return true;
 
 }
 
-/* ==================================================
-   LOAD GALLERY FROM SUPABASE
-================================================== */
 
-loadGalleryFromSupabase();
+/* ================= UPDATE ================= */
+
+async function updateGalleryItem(id, updates) {
+
+    const updateData = {};
+
+
+    if (updates.title !== undefined) {
+
+        updateData.title =
+            updates.title;
+
+    }
+
+
+    if (updates.category !== undefined) {
+
+        updateData.category =
+            updates.category;
+
+    }
+
+
+    if (updates.caption !== undefined) {
+
+        updateData.caption =
+            updates.caption;
+
+    }
+
+
+    if (updates.image !== undefined) {
+
+        updateData.image_url =
+            updates.image;
+
+    }
+
+
+    const { data, error } =
+        await supabaseClient
+            .from("gallery")
+            .update(updateData)
+            .eq("id", id)
+            .select()
+            .single();
+
+
+    if (error) {
+
+        console.error(
+            `❌ Gagal mengupdate Gallery "${id}":`,
+            error
+        );
+
+        return false;
+
+    }
+
+
+    /* ================= UPDATE LOCAL DATA ================= */
+
+    const index =
+        galleryData.findIndex(
+            item => item.id === id
+        );
+
+
+    if (index !== -1) {
+
+        galleryData[index] = {
+
+            id: data.id,
+
+            image: data.image_url,
+
+            category: data.category,
+
+            categoryLabel:
+                galleryCategories[data.category] ||
+                data.category ||
+                "",
+
+            title:
+                data.title || "",
+
+            caption:
+                data.caption ||
+                data.title ||
+                ""
+
+        };
+
+    }
+
+
+    /* ================= RENDER ================= */
+
+    renderGallery();
+
+
+    galleryItems =
+        document.querySelectorAll(
+            ".gallery-items"
+        );
+
+
+    updateVisibleItems();
+
+
+    console.log(
+        "✅ Gallery berhasil diupdate:",
+        data
+    );
+
+
+    return true;
+
+}
+
+
+/* ================= DELETE ================= */
+
+async function removeGalleryItem(id) {
+
+    const { error } =
+        await supabaseClient
+            .from("gallery")
+            .delete()
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(
+            `❌ Gagal menghapus Gallery "${id}":`,
+            error
+        );
+
+        return false;
+
+    }
+
+
+    /* ================= HAPUS LOCAL DATA ================= */
+
+    galleryData =
+        galleryData.filter(
+            item => item.id !== id
+        );
+
+
+    /* ================= RENDER ================= */
+
+    renderGallery();
+
+
+    galleryItems =
+        document.querySelectorAll(
+            ".gallery-items"
+        );
+
+
+    updateVisibleItems();
+
+
+    console.log(
+        `✅ Gallery "${id}" berhasil dihapus.`
+    );
+
+
+    return true;
+
+}
