@@ -2,6 +2,77 @@
    GALLERY FILTER
 ================================================== */
 
+/* ==================================================
+   SUPABASE GALLERY READ
+================================================== */
+
+async function loadGalleryFromSupabase() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("gallery")
+        .select("*")
+        .order("created_at", {
+            ascending: true
+        });
+
+
+    if (error) {
+
+        console.error(
+            "❌ Gagal mengambil data Gallery dari Supabase:",
+            error
+        );
+
+        return false;
+
+    }
+
+
+    console.log(
+        "✅ Data Gallery dari Supabase:",
+        data
+    );
+
+
+    /* ================= CONVERT DATA ================= */
+
+    galleryData.length = 0;
+
+
+    data.forEach(item => {
+
+        galleryData.push({
+
+            id: item.id,
+
+            title: item.title,
+
+            category: item.category,
+
+            caption: item.caption,
+
+            image: item.image_url
+
+        });
+
+    });
+
+
+    /* ================= RENDER ================= */
+
+    renderGallery();
+
+
+    updateVisibleItems();
+
+
+    return true;
+
+}
+
 const filterButtons =
     document.querySelectorAll(".gallery-filter-btn");
 
@@ -1615,3 +1686,9 @@ function removeGalleryItem(id) {
     return true;
 
 }
+
+/* ==================================================
+   LOAD GALLERY FROM SUPABASE
+================================================== */
+
+loadGalleryFromSupabase();
