@@ -1,0 +1,2543 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Gallery Panel — AZRA SOFA</title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!-- SUPABASE CONFIG -->
+
+    <script src="js/supabase-config.js"></script>
+
+
+    <style>
+        .gallery-image-preview {
+
+            display: none;
+
+            width: 100%;
+
+            max-width: 400px;
+
+            margin-top: 15px;
+
+            border-radius: 10px;
+
+            object-fit: cover;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.08);
+
+        }
+
+        .gallery-image-info {
+
+            display: block;
+
+            margin-top: 8px;
+
+            font-size: 12px;
+
+            color: #888;
+
+            line-height: 1.5;
+        }
+
+        .gallery-id-wrapper {
+            position: relative;
+        }
+
+        .gallery-id-suggestions {
+            display: none;
+
+            position: absolute;
+
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+
+            max-height: 220px;
+
+            overflow-y: auto;
+
+            background: #ffffff;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.08);
+
+            z-index: 1000;
+        }
+
+        .gallery-id-suggestions.active {
+            display: block;
+        }
+
+        .gallery-id-suggestion-title {
+            padding: 10px 14px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            color: #999;
+
+            border-bottom: 1px solid #eee;
+        }
+
+        .gallery-id-suggestion {
+            padding: 10px 14px;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 13px;
+
+            color: #6b4f3a;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .gallery-id-suggestion:hover {
+            background: #f7f3ed;
+        }
+
+        .gallery-id-empty {
+            padding: 10px 14px;
+
+            font-size: 12px;
+
+            color: #999;
+        }
+
+        .gallery-card-id {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 11px;
+
+            color: #999;
+
+            word-break: break-all;
+
+        }
+
+
+        .gallery-card-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 16px;
+
+        }
+
+
+        .edit-gallery-button,
+        .delete-gallery-button {
+
+            flex: 1;
+
+            border: none;
+
+            padding: 10px 12px;
+
+            border-radius: 7px;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .edit-gallery-button {
+
+            background: #a77b5d;
+
+            color: #ffffff;
+
+        }
+
+
+        .edit-gallery-button:hover {
+
+            background: #6b4f3a;
+
+        }
+
+
+        .delete-gallery-button {
+
+            background: #eeeeee;
+
+            color: #a33a2b;
+
+        }
+
+
+        .delete-gallery-button:hover {
+
+            background: #fce8e6;
+
+        }
+
+        .admin-header-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+        .add-gallery-button {
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            background: #a77b5d;
+
+            color: #ffffff;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+
+        }
+
+        .add-gallery-button:hover {
+
+            background: #ffffff;
+
+            color: #6b4f3a;
+
+            transform: translateY(-1px);
+
+        }
+
+        .gallery-form-container {
+            display: none;
+
+            max-width: 700px;
+
+            margin: 30px auto;
+
+            padding: 30px;
+
+            background: #ffffff;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .gallery-form-container.active {
+            display: block;
+        }
+
+
+        .gallery-form-header {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+
+        .gallery-form-header h2 {
+            color: #6b4f3a;
+
+            font-size: 22px;
+        }
+
+
+        .close-form-button {
+            border: none;
+
+            background: transparent;
+
+            font-size: 28px;
+
+            color: #777;
+
+            cursor: pointer;
+        }
+
+
+        .gallery-form-container .form-group {
+            margin-bottom: 18px;
+        }
+
+
+        .gallery-form-container label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .gallery-form-container input,
+        .gallery-form-container select,
+        .gallery-form-container textarea {
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 14px;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .gallery-form-container textarea {
+            resize: vertical;
+        }
+
+
+        .gallery-form-container input:focus,
+        .gallery-form-container select:focus,
+        .gallery-form-container textarea:focus {
+
+            border-color: #a77b5d;
+
+            box-shadow:
+                0 0 0 3px rgba(167, 123, 93, 0.12);
+
+        }
+
+
+        .form-actions {
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+
+        .save-gallery-button,
+        .cancel-gallery-button {
+
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+
+        .save-gallery-button {
+            background: #a77b5d;
+
+            color: #ffffff;
+        }
+
+
+        .save-gallery-button:hover {
+            background: #6b4f3a;
+        }
+
+
+        .cancel-gallery-button {
+            background: #eeeeee;
+
+            color: #444;
+        }
+
+
+        .cancel-gallery-button:hover {
+            background: #dddddd;
+        }
+
+
+        .gallery-form-message {
+            display: none;
+
+            margin-top: 18px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .gallery-form-message.success {
+            display: block;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+        }
+
+
+        .gallery-form-message.error {
+            display: block;
+
+            background: #fce8e6;
+
+            color: #a33a2b;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .gallery-form-container {
+                padding: 22px;
+            }
+
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+
+            .save-gallery-button,
+            .cancel-gallery-button {
+                width: 100%;
+            }
+
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            background: #f7f3ed;
+
+            color: #252321;
+
+            font-family: "Montserrat", sans-serif;
+
+        }
+
+
+        .admin-header {
+
+            background: #6b4f3a;
+
+            color: #ffffff;
+
+            padding: 20px 6%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+        }
+
+
+        .admin-header h1 {
+
+            font-size: 22px;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        .admin-header p {
+
+            margin-top: 5px;
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 13px;
+
+            opacity: 0.85;
+
+        }
+
+
+        .logout-button {
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            background: #ffffff;
+
+            color: #6b4f3a;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .logout-button:hover {
+
+            transform: translateY(-1px);
+
+            opacity: 0.9;
+
+        }
+
+
+        .admin-container {
+
+            width: 88%;
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+
+        }
+
+
+        .admin-info {
+
+            background: #ffffff;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.06);
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .admin-info h2 {
+
+            color: #6b4f3a;
+
+            font-size: 20px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .admin-info p {
+
+            font-size: 14px;
+
+            color: #666;
+
+            line-height: 1.6;
+
+        }
+
+
+        .gallery-status {
+
+            margin-top: 12px;
+
+            font-weight: 600;
+
+        }
+
+
+        .gallery-list {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .gallery-card {
+
+            background: #ffffff;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.06);
+
+        }
+
+
+        .gallery-card img {
+
+            width: 100%;
+
+            aspect-ratio: 16 / 10;
+
+            object-fit: cover;
+
+            display: block;
+
+        }
+
+
+        .gallery-card-content {
+
+            padding: 18px;
+
+        }
+
+
+        .gallery-card-content h3 {
+
+            font-size: 15px;
+
+            color: #6b4f3a;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .gallery-card-content p {
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 14px;
+
+            color: #666;
+
+            line-height: 1.5;
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .gallery-list {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .admin-header-actions {
+                gap: 6px;
+            }
+
+            .add-gallery-button {
+                padding: 9px 12px;
+                font-size: 12px;
+            }
+
+            .admin-header {
+
+                padding: 18px 5%;
+
+            }
+
+            .admin-header h1 {
+
+                font-size: 18px;
+
+            }
+
+            .logout-button {
+
+                padding: 9px 13px;
+
+                font-size: 12px;
+
+            }
+
+            .admin-container {
+
+                width: 90%;
+
+                margin: 25px auto;
+
+            }
+
+            .gallery-list {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header class="admin-header">
+
+        <div>
+
+            <h1>
+                AZRA SOFA
+            </h1>
+
+            <p>
+                Gallery Administration
+            </p>
+
+        </div>
+
+        <div class="admin-header-actions">
+
+            <button id="addGalleryButton" class="add-gallery-button">
+                + Tambah Gallery
+            </button>
+
+            <button id="logoutButton" class="logout-button">
+                Logout
+            </button>
+
+        </div>
+    </header>
+
+    <div id="galleryFormContainer" class="gallery-form-container">
+
+        <div class="gallery-form-header">
+            <h2>Tambah Gallery</h2>
+
+            <button type="button" id="closeGalleryForm" class="close-form-button">
+                ×
+            </button>
+        </div>
+
+
+        <form id="galleryForm">
+
+            <div class="form-group">
+
+                <label for="galleryId">
+                    ID Gallery
+                </label>
+
+                <div class="gallery-id-wrapper">
+
+                    <input type="text" id="galleryId" placeholder="Contoh: custom-010" autocomplete="off" required>
+
+                    <div id="galleryIdSuggestions" class="gallery-id-suggestions"></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="galleryImage">
+                    Gambar Gallery
+                </label>
+
+                <input type="file" id="galleryImage" accept="image/*">
+
+                <small id="galleryImageInfo" class="gallery-image-info">
+                    Pilih gambar dari komputer.
+                </small>
+
+                <img id="galleryImagePreview" class="gallery-image-preview" alt="Preview Gallery">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="galleryTitle">
+                    Judul
+                </label>
+
+                <input type="text" id="galleryTitle" placeholder="Judul sofa" required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="galleryCategory">
+                    Kategori
+                </label>
+
+                <select id="galleryCategory" required>
+
+                    <option value="">
+                        Pilih kategori
+                    </option>
+
+                    <option value="custom">
+                        Custom Sofa
+                    </option>
+
+                    <option value="repair">
+                        Repair Sofa
+                    </option>
+
+                    <option value="details">
+                        Details
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="galleryCaption">
+                    Caption
+                </label>
+
+                <textarea id="galleryCaption" rows="4" placeholder="Deskripsi singkat gallery..."></textarea>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button type="submit" class="save-gallery-button">
+                    Simpan Gallery
+                </button>
+
+                <button type="button" id="cancelGalleryForm" class="cancel-gallery-button">
+                    Batal
+                </button>
+
+            </div>
+
+
+            <div id="galleryFormMessage" class="gallery-form-message"></div>
+
+        </form>
+
+    </div>
+
+    <main class="admin-container">
+
+
+        <section class="admin-info">
+
+            <h2>
+                Admin Gallery
+            </h2>
+
+            <p id="adminUser">
+                Memeriksa session admin...
+            </p>
+
+            <p id="galleryStatus" class="gallery-status">
+                Memuat Gallery...
+            </p>
+
+        </section>
+
+
+        <section id="galleryList" class="gallery-list"></section>
+
+
+    </main>
+
+
+    <script>
+
+        /* ==================================================
+           GALLERY FORM STATE
+        ================================================== */
+
+        let editingGalleryId = null;
+
+        let selectedGalleryFile = null;
+
+        /* ==================================================
+           GALLERY ID SUGGESTIONS
+        ================================================== */
+
+        const galleryIdInput =
+            document.getElementById("galleryId");
+
+        const galleryIdSuggestions =
+            document.getElementById(
+                "galleryIdSuggestions"
+            );
+
+
+        let galleryIds = [];
+
+
+        /* ==================================================
+           LOAD GALLERY IDS
+        ================================================== */
+
+        async function loadGalleryIds() {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("gallery")
+                    .select("id")
+                    .order(
+                        "id",
+                        {
+                            ascending: true
+                        }
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "❌ Gagal mengambil ID Gallery:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            galleryIds =
+                data.map(
+                    item => item.id
+                );
+
+
+            console.log(
+                "✅ ID Gallery berhasil dimuat:",
+                galleryIds
+            );
+
+        }
+
+
+        /* ==================================================
+           SHOW ID SUGGESTIONS
+        ================================================== */
+
+        function showGalleryIdSuggestions() {
+
+            /* Jangan tampilkan suggestion ketika EDIT */
+
+            if (editingGalleryId) {
+
+                galleryIdSuggestions.classList.remove(
+                    "active"
+                );
+
+                return;
+
+            }
+
+
+            const keyword =
+                galleryIdInput
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            /* Belum mengetik apa-apa */
+
+            if (!keyword) {
+
+                galleryIdSuggestions.classList.remove(
+                    "active"
+                );
+
+                galleryIdSuggestions.innerHTML = "";
+
+                return;
+
+            }
+
+
+            /* Cari ID yang mengandung keyword */
+
+            const matches =
+                galleryIds.filter(
+                    id =>
+                        id
+                            .toLowerCase()
+                            .includes(keyword)
+                );
+
+
+            galleryIdSuggestions.innerHTML = "";
+
+
+            /* ================= TITLE ================= */
+
+            const title =
+                document.createElement("div");
+
+            title.className =
+                "gallery-id-suggestion-title";
+
+            title.textContent =
+                matches.length
+                    ? "ID Gallery yang sudah digunakan"
+                    : "Belum ada ID yang cocok";
+
+            galleryIdSuggestions.appendChild(
+                title
+            );
+
+
+            /* ================= EMPTY ================= */
+
+            if (!matches.length) {
+
+                const empty =
+                    document.createElement("div");
+
+                empty.className =
+                    "gallery-id-empty";
+
+                empty.textContent =
+                    "ID ini belum digunakan.";
+
+                galleryIdSuggestions.appendChild(
+                    empty
+                );
+
+            }
+
+
+            /* ================= MATCHES ================= */
+
+            matches.forEach(id => {
+
+                const item =
+                    document.createElement("div");
+
+                item.className =
+                    "gallery-id-suggestion";
+
+                item.textContent =
+                    id;
+
+
+                item.addEventListener(
+                    "click",
+                    function () {
+
+                        galleryIdInput.value =
+                            id;
+
+                        galleryIdSuggestions.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                galleryIdSuggestions.appendChild(
+                    item
+                );
+
+            });
+
+
+            galleryIdSuggestions.classList.add(
+                "active"
+            );
+
+        }
+
+
+        /* ==================================================
+           INPUT EVENT
+        ================================================== */
+
+        galleryIdInput.addEventListener(
+            "input",
+            function () {
+
+                showGalleryIdSuggestions();
+
+            }
+        );
+
+
+        /* ==================================================
+           FOCUS EVENT
+        ================================================== */
+
+        galleryIdInput.addEventListener(
+            "focus",
+            function () {
+
+                showGalleryIdSuggestions();
+
+            }
+        );
+
+
+        /* ==================================================
+           CLOSE SUGGESTIONS
+        ================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    !event.target.closest(
+                        ".gallery-id-wrapper"
+                    )
+                ) {
+
+                    galleryIdSuggestions.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+        /* ==================================================
+           ADMIN SESSION
+        ================================================== */
+
+        async function checkAdminSession() {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .auth
+                    .getSession();
+
+
+            if (error) {
+
+                console.error(
+                    "❌ Gagal mengecek session:",
+                    error
+                );
+
+                window.location.href =
+                    "admin-gallery.html";
+
+                return null;
+
+            }
+
+
+            if (!data.session) {
+
+                console.warn(
+                    "⚠️ Tidak ada session admin."
+                );
+
+                window.location.href =
+                    "admin-gallery.html";
+
+                return null;
+
+            }
+
+
+            console.log(
+                "✅ Session admin aktif:",
+                data.session.user
+            );
+
+
+            document.getElementById(
+                "adminUser"
+            ).textContent =
+                `Login sebagai: ${data.session.user.email}`;
+
+
+            return data.session;
+
+        }
+
+
+        /* ==================================================
+           LOAD GALLERY
+        ================================================== */
+
+        async function loadAdminGallery(statusMessage = null) {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("gallery")
+                    .select("*")
+                    .order(
+                        "created_at",
+                        {
+                            ascending: true
+                        }
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "❌ Gagal mengambil Gallery:",
+                    error
+                );
+
+                document.getElementById(
+                    "galleryStatus"
+                ).textContent =
+                    "Gagal memuat data Gallery.";
+
+                return;
+
+            }
+
+
+            console.log(
+                "✅ Gallery admin berhasil dimuat:",
+                data
+            );
+
+
+            const galleryList =
+                document.getElementById(
+                    "galleryList"
+                );
+
+
+            galleryList.innerHTML = "";
+
+
+            data.forEach(item => {
+
+                const card =
+                    document.createElement("article");
+
+                card.className =
+                    "gallery-card";
+
+
+                card.innerHTML = `
+
+    <img
+        src="${item.image_url}"
+        alt="${item.title || "AZRA SOFA"}"
+    >
+
+    <div class="gallery-card-content">
+
+        <small class="gallery-card-id">
+            ID: ${item.id}
+        </small>
+
+        <h3>
+            ${item.title || ""}
+        </h3>
+
+        <p>
+            ${item.caption || ""}
+        </p>
+
+        <div class="gallery-card-actions">
+
+            <button
+                type="button"
+                class="edit-gallery-button"
+                data-id="${item.id}"
+            >
+                Edit
+            </button>
+
+            <button
+                type="button"
+                class="delete-gallery-button"
+                data-id="${item.id}"
+            >
+                Hapus
+            </button>
+
+        </div>
+
+    </div>
+
+`;
+
+                galleryList.appendChild(card);
+
+            });
+
+
+            /* ================= STATUS ================= */
+
+            if (statusMessage) {
+
+                document.getElementById(
+                    "galleryStatus"
+                ).textContent =
+                    `${statusMessage} ${data.length} Gallery ditemukan.`;
+
+            } else {
+
+                document.getElementById(
+                    "galleryStatus"
+                ).textContent =
+                    `${data.length} Gallery ditemukan.`;
+
+            }
+
+        }
+
+        /* ==================================================
+        DELETE GALLERY
+        ================================================== */
+
+        async function deleteGalleryItem(id, deleteButton) {
+
+            /* ================= KONFIRMASI ================= */
+
+            const confirmed =
+                confirm(
+                    `Yakin ingin menghapus Gallery "${id}"?\n\n` +
+                    `Data yang dihapus tidak dapat dikembalikan.`
+                );
+
+
+            if (!confirmed) {
+
+                console.log(
+                    `ℹ️ Penghapusan Gallery "${id}" dibatalkan.`
+                );
+
+                return;
+
+            }
+
+
+            /* ================= BUTTON ================= */
+
+            if (deleteButton) {
+
+                deleteButton.disabled = true;
+
+                deleteButton.textContent =
+                    "Menghapus...";
+
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            /* ================= DELETE ================= */
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("gallery")
+                    .delete()
+                    .eq("id", id)
+                    .select();
+
+
+            /* ================= ERROR ================= */
+
+            if (error) {
+
+                console.error(
+                    `❌ Gagal menghapus Gallery "${id}":`,
+                    error
+                );
+
+
+                if (deleteButton) {
+
+                    deleteButton.disabled =
+                        false;
+
+                    deleteButton.textContent =
+                        "Hapus";
+
+                }
+
+
+                document.getElementById(
+                    "galleryStatus"
+                ).textContent =
+                    "Gagal menghapus Gallery.";
+
+                return;
+
+            }
+
+
+            /* ================= CEK HASIL ================= */
+
+            if (!data || data.length === 0) {
+
+                console.warn(
+                    `⚠️ Gallery "${id}" tidak ditemukan atau tidak dapat dihapus.`
+                );
+
+
+                if (deleteButton) {
+
+                    deleteButton.disabled =
+                        false;
+
+                    deleteButton.textContent =
+                        "Hapus";
+
+                }
+
+
+                document.getElementById(
+                    "galleryStatus"
+                ).textContent =
+                    "Gallery tidak ditemukan atau tidak dapat dihapus.";
+
+                return;
+
+            }
+
+
+            /* ================= SUCCESS ================= */
+
+            console.log(
+                `✅ Gallery "${id}" berhasil dihapus:`,
+                data
+            );
+
+
+            /* ================= REFRESH ================= */
+
+            await loadAdminGallery(
+                "Gallery berhasil dihapus."
+            );
+
+        }
+
+        /* ==================================================
+           DELETE BUTTON
+        ================================================== */
+
+        document
+            .getElementById("galleryList")
+            .addEventListener(
+                "click",
+                async function (event) {
+
+                    const deleteButton =
+                        event.target.closest(
+                            ".delete-gallery-button"
+                        );
+
+
+                    if (!deleteButton) return;
+
+
+                    const id =
+                        deleteButton.dataset.id;
+
+
+                    if (!id) {
+
+                        console.error(
+                            "❌ ID Gallery tidak ditemukan."
+                        );
+
+                        return;
+
+                    }
+
+
+                    await deleteGalleryItem(
+                        id,
+                        deleteButton
+                    );
+
+                }
+            );
+
+        /* ==================================================
+           EDIT GALLERY
+        ================================================== */
+
+        async function openEditGallery(id) {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("gallery")
+                    .select("*")
+                    .eq("id", id)
+                    .maybeSingle();
+
+
+            if (error) {
+
+                console.error(
+                    "❌ Gagal mengambil data Gallery:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            if (!data) {
+
+                console.warn(
+                    `⚠️ Gallery "${id}" tidak ditemukan.`
+                );
+
+                return;
+
+            }
+
+
+            /* ================= MODE EDIT ================= */
+
+            editingGalleryId =
+                data.id;
+
+
+            /* ================= ISI FORM ================= */
+
+            document.getElementById(
+                "galleryId"
+            ).value =
+                data.id;
+
+
+            document.getElementById(
+                "galleryImage"
+            ).value =
+                data.image_url;
+
+
+            document.getElementById(
+                "galleryTitle"
+            ).value =
+                data.title || "";
+
+
+            document.getElementById(
+                "galleryCategory"
+            ).value =
+                data.category;
+
+
+            document.getElementById(
+                "galleryCaption"
+            ).value =
+                data.caption || "";
+
+
+            /* ================= ID TIDAK BOLEH DIUBAH ================= */
+
+            document.getElementById(
+                "galleryId"
+            ).readOnly = true;
+
+
+            /* ================= JUDUL FORM ================= */
+
+            document.querySelector(
+                ".gallery-form-header h2"
+            ).textContent =
+                "Edit Gallery";
+
+
+            /* ================= TOMBOL ================= */
+
+            document.querySelector(
+                ".save-gallery-button"
+            ).textContent =
+                "Update Gallery";
+
+
+            /* ================= MESSAGE ================= */
+
+            const message =
+                document.getElementById(
+                    "galleryFormMessage"
+                );
+
+            message.className =
+                "gallery-form-message";
+
+            message.textContent =
+                "";
+
+
+            /* ================= BUKA FORM ================= */
+
+            document
+                .getElementById(
+                    "galleryFormContainer"
+                )
+                .classList.add("active");
+
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+
+            console.log(
+                `✏️ Edit Gallery dibuka: "${id}"`
+            );
+
+        }
+
+        /* ==================================================
+           EDIT BUTTON
+        ================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const button =
+                    event.target.closest(
+                        ".edit-gallery-button"
+                    );
+
+
+                if (!button) return;
+
+
+                const id =
+                    button.dataset.id;
+
+
+                openEditGallery(id);
+
+            }
+        );
+
+        /* ==================================================
+   RESET GALLERY FORM
+================================================== */
+
+        function resetGalleryForm() {
+
+            editingGalleryId = null;
+
+            selectedGalleryFile = null;
+
+            document.getElementById(
+                "galleryImage"
+            ).value = "";
+
+            document.getElementById(
+                "galleryImageInfo"
+            ).textContent =
+                "Pilih gambar dari komputer.";
+
+            const preview =
+                document.getElementById(
+                    "galleryImagePreview"
+                );
+
+            preview.src = "";
+
+            preview.style.display =
+                "none";
+
+            document.getElementById(
+                "galleryForm"
+            ).reset();
+
+
+            document.getElementById(
+                "galleryId"
+            ).readOnly = false;
+
+
+            document.querySelector(
+                ".gallery-form-header h2"
+            ).textContent =
+                "Tambah Gallery";
+
+
+            document.querySelector(
+                ".save-gallery-button"
+            ).textContent =
+                "Simpan Gallery";
+
+
+            const message =
+                document.getElementById(
+                    "galleryFormMessage"
+                );
+
+
+            message.className =
+                "gallery-form-message";
+
+
+            message.textContent =
+                "";
+
+        }
+
+        document
+            .getElementById("closeGalleryForm")
+            .addEventListener(
+                "click",
+                function () {
+
+                    resetGalleryForm();
+
+                    document
+                        .getElementById(
+                            "galleryFormContainer"
+                        )
+                        .classList.remove("active");
+
+                }
+            );
+
+
+        document
+            .getElementById("cancelGalleryForm")
+            .addEventListener(
+                "click",
+                function () {
+
+                    resetGalleryForm();
+
+                    document
+                        .getElementById(
+                            "galleryFormContainer"
+                        )
+                        .classList.remove("active");
+
+                }
+            );
+
+        /* ==================================================
+   ADD GALLERY FORM
+================================================== */
+
+        const addGalleryButton =
+            document.getElementById(
+                "addGalleryButton"
+            );
+
+        const galleryFormContainer =
+            document.getElementById(
+                "galleryFormContainer"
+            );
+
+        const closeGalleryForm =
+            document.getElementById(
+                "closeGalleryForm"
+            );
+
+        const cancelGalleryForm =
+            document.getElementById(
+                "cancelGalleryForm"
+            );
+
+        const galleryForm =
+            document.getElementById(
+                "galleryForm"
+            );
+
+        const galleryFormMessage =
+            document.getElementById(
+                "galleryFormMessage"
+            );
+
+        /* ==================================================
+GALLERY IMAGE FILE
+================================================== */
+
+        const galleryImageInput =
+            document.getElementById(
+                "galleryImage"
+            );
+
+        const galleryImageInfo =
+            document.getElementById(
+                "galleryImageInfo"
+            );
+
+
+        galleryImageInput.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    this.files[0];
+
+
+                const preview =
+                    document.getElementById(
+                        "galleryImagePreview"
+                    );
+
+
+                if (!file) {
+
+                    selectedGalleryFile = null;
+
+
+                    galleryImageInfo.textContent =
+                        "Tidak ada gambar yang dipilih.";
+
+
+                    preview.src = "";
+
+                    preview.style.display =
+                        "none";
+
+
+                    return;
+
+                }
+
+
+                /* ================= FILE ================= */
+
+                selectedGalleryFile = file;
+
+
+                galleryImageInfo.textContent =
+                    `Gambar dipilih: ${file.name}`;
+
+
+                /* ================= PREVIEW ================= */
+
+                const imageUrl =
+                    URL.createObjectURL(file);
+
+
+                preview.src =
+                    imageUrl;
+
+
+                preview.style.display =
+                    "block";
+
+
+                /* ================= CONSOLE ================= */
+
+                console.log(
+                    "🖼️ Gallery image dipilih:",
+                    file
+                );
+
+                console.log(
+                    "👁️ Preview URL:",
+                    imageUrl
+                );
+
+            }
+        );
+
+        /* ==================================================
+           SHOW FORM
+        ================================================== */
+
+        addGalleryButton.addEventListener(
+            "click",
+            function () {
+
+                galleryFormContainer.classList.add(
+                    "active"
+                );
+
+                galleryForm.reset();
+
+                galleryFormMessage.className =
+                    "gallery-form-message";
+
+                galleryFormMessage.textContent = "";
+
+            }
+        );
+
+
+        /* ==================================================
+           CLOSE FORM
+        ================================================== */
+
+        function closeGalleryFormPanel() {
+
+            galleryFormContainer.classList.remove(
+                "active"
+            );
+
+            galleryForm.reset();
+
+            galleryFormMessage.className =
+                "gallery-form-message";
+
+            galleryFormMessage.textContent = "";
+
+        }
+
+
+        closeGalleryForm.addEventListener(
+            "click",
+            closeGalleryFormPanel
+        );
+
+
+        cancelGalleryForm.addEventListener(
+            "click",
+            closeGalleryFormPanel
+        );
+
+
+        /* ==================================================
+           SHOW FORM MESSAGE
+        ================================================== */
+
+        function showGalleryFormMessage(
+            message,
+            type
+        ) {
+
+            galleryFormMessage.textContent =
+                message;
+
+            galleryFormMessage.className =
+                `gallery-form-message ${type}`;
+
+        }
+
+        /* ==================================================
+           UPLOAD GALLERY IMAGE
+        ================================================== */
+
+        async function uploadGalleryImage(file) {
+
+            if (!file) {
+
+                console.warn(
+                    "⚠️ Tidak ada file gambar."
+                );
+
+                return null;
+
+            }
+
+
+            /* ================= NAMA FILE ================= */
+
+            const fileExtension =
+                file.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+            const fileName =
+                `${Date.now()}-${crypto.randomUUID()}.${fileExtension}`;
+
+
+            const filePath =
+                fileName;
+
+
+            console.log(
+                "📤 Mulai upload:",
+                filePath
+            );
+
+
+            /* ================= UPLOAD ================= */
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .storage
+                    .from("gallery-images")
+                    .upload(
+                        filePath,
+                        file,
+                        {
+                            cacheControl: "3600",
+                            upsert: false
+                        }
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "❌ Upload gambar gagal:",
+                    error
+                );
+
+                return null;
+
+            }
+
+
+            /* ================= PUBLIC URL ================= */
+
+            const {
+                data
+            } =
+                supabaseClient
+                    .storage
+                    .from("gallery-images")
+                    .getPublicUrl(
+                        filePath
+                    );
+
+
+            const publicUrl =
+                data.publicUrl;
+
+
+            console.log(
+                "✅ Upload berhasil."
+            );
+
+            console.log(
+                "🔗 Public URL:",
+                publicUrl
+            );
+
+
+            return publicUrl;
+
+        }
+
+        /* ==================================================
+           SUBMIT GALLERY
+        ================================================== */
+
+        galleryForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const id =
+                    document
+                        .getElementById("galleryId")
+                        .value
+                        .trim();
+
+                const image =
+                    document
+                        .getElementById("galleryImage")
+                        .value
+                        .trim();
+
+                const title =
+                    document
+                        .getElementById("galleryTitle")
+                        .value
+                        .trim();
+
+                const category =
+                    document
+                        .getElementById("galleryCategory")
+                        .value;
+
+                const caption =
+                    document
+                        .getElementById("galleryCaption")
+                        .value
+                        .trim();
+
+
+                /* ==================================================
+                   VALIDASI
+                ================================================== */
+
+                if (
+                    !id ||
+                    !image ||
+                    !title ||
+                    !category
+                ) {/* ==================================================
+   CEK ID DUPLIKAT
+================================================== */
+
+                    if (!editingGalleryId) {
+
+                        const duplicate =
+                            galleryIds.some(
+                                existingId =>
+                                    existingId.toLowerCase() ===
+                                    id.toLowerCase()
+                            );
+
+
+                        if (duplicate) {
+
+                            showGalleryFormMessage(
+                                `ID Gallery "${id}" sudah digunakan. Silakan gunakan ID lain.`,
+                                "error"
+                            );
+
+
+                            document
+                                .getElementById("galleryId")
+                                .focus();
+
+
+                            return;
+
+                        }
+
+                    }
+                }
+
+
+                /* ==================================================
+                   BUTTON
+                ================================================== */
+
+                const saveButton =
+                    galleryForm.querySelector(
+                        ".save-gallery-button"
+                    );
+
+
+                saveButton.disabled = true;
+
+                saveButton.textContent =
+                    editingGalleryId
+                        ? "Mengupdate..."
+                        : "Menyimpan...";
+
+
+                /* ==================================================
+                   MODE EDIT → UPDATE
+                ================================================== */
+
+                if (editingGalleryId) {
+
+                    const {
+                        data,
+                        error
+                    } =
+                        await supabaseClient
+                            .from("gallery")
+                            .update({
+
+                                image_url: image,
+
+                                category: category,
+
+                                title: title,
+
+                                caption:
+                                    caption ||
+                                    title
+
+                            })
+                            .eq(
+                                "id",
+                                editingGalleryId
+                            )
+                            .select()
+                            .single();
+
+
+                    /* ================= ERROR ================= */
+
+                    if (error) {
+
+                        console.error(
+                            "❌ Gagal mengupdate Gallery:",
+                            error
+                        );
+
+
+                        showGalleryFormMessage(
+                            error.message ||
+                            "Gagal mengupdate Gallery.",
+                            "error"
+                        );
+
+
+                        saveButton.disabled =
+                            false;
+
+                        saveButton.textContent =
+                            "Update Gallery";
+
+                        return;
+
+                    }
+
+
+                    /* ================= SUCCESS ================= */
+
+                    console.log(
+                        "✅ Gallery berhasil diupdate:",
+                        data
+                    );
+
+
+                    showGalleryFormMessage(
+                        "Gallery berhasil diupdate.",
+                        "success"
+                    );
+
+
+                    /* ================= REFRESH ================= */
+
+                    await loadAdminGallery();
+
+
+                    /* ================= RESET ================= */
+
+                    resetGalleryForm();
+
+
+                    saveButton.disabled =
+                        false;
+
+
+                    /* ================= CLOSE ================= */
+
+                    setTimeout(() => {
+
+                        closeGalleryFormPanel();
+
+                    }, 700);
+
+
+                    return;
+
+                }
+
+
+
+                /* ==================================================
+                   MODE TAMBAH → UPLOAD GAMBAR + INSERT
+                ================================================== */
+
+                /* ================= CEK FILE ================= */
+
+                if (!selectedGalleryFile) {
+
+                    showGalleryFormMessage(
+                        "Silakan pilih gambar terlebih dahulu.",
+                        "error"
+                    );
+
+                    saveButton.disabled = false;
+
+                    saveButton.textContent =
+                        "Simpan Gallery";
+
+                    return;
+
+                }
+
+
+                /* ================= UPLOAD ================= */
+
+                saveButton.textContent =
+                    "Mengupload...";
+
+                showGalleryFormMessage(
+                    "Sedang mengupload gambar...",
+                    "success"
+                );
+
+
+                const imageUrl =
+                    await uploadGalleryImage(
+                        selectedGalleryFile
+                    );
+
+
+                /* ================= UPLOAD GAGAL ================= */
+
+                if (!imageUrl) {
+
+                    showGalleryFormMessage(
+                        "Gagal mengupload gambar. Data Gallery belum disimpan.",
+                        "error"
+                    );
+
+                    saveButton.disabled = false;
+
+                    saveButton.textContent =
+                        "Simpan Gallery";
+
+                    return;
+
+                }
+
+
+                /* ================= SIMPAN DATABASE ================= */
+
+                saveButton.textContent =
+                    "Menyimpan...";
+
+                showGalleryFormMessage(
+                    "Gambar berhasil diupload. Sedang menyimpan data Gallery...",
+                    "success"
+                );
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .from("gallery")
+                        .insert({
+
+                            id: id,
+
+                            image_url: imageUrl,
+
+                            category: category,
+
+                            title: title,
+
+                            caption:
+                                caption ||
+                                title
+
+                        })
+                        .select()
+                        .single();
+
+
+                /* ================= DATABASE ERROR ================= */
+
+                if (error) {
+
+                    console.error(
+                        "❌ Gagal menambahkan Gallery:",
+                        error
+                    );
+
+
+                    showGalleryFormMessage(
+                        error.message ||
+                        "Gagal menyimpan Gallery.",
+                        "error"
+                    );
+
+
+                    saveButton.disabled =
+                        false;
+
+                    saveButton.textContent =
+                        "Simpan Gallery";
+
+                    return;
+
+                }
+
+
+                /* ================= SUCCESS ================= */
+
+                console.log(
+                    "✅ Gallery berhasil ditambahkan:",
+                    data
+                );
+
+
+                showGalleryFormMessage(
+                    "Gallery berhasil ditambahkan.",
+                    "success"
+                );
+
+
+                /* ================= REFRESH ================= */
+
+                await loadAdminGallery();
+
+
+                /* ================= RESET ================= */
+
+                resetGalleryForm();
+
+
+                saveButton.disabled =
+                    false;
+
+
+                /* ================= CLOSE ================= */
+
+                setTimeout(() => {
+
+                    closeGalleryFormPanel();
+
+                }, 700);
+            });
+
+        /* ==================================================
+           LOGOUT
+        ================================================== */
+
+        document
+            .getElementById("logoutButton")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    const {
+                        error
+                    } =
+                        await supabaseClient
+                            .auth
+                            .signOut();
+
+
+                    if (error) {
+
+                        console.error(
+                            "❌ Logout gagal:",
+                            error
+                        );
+
+                        return;
+
+                    }
+
+
+                    console.log(
+                        "✅ Logout berhasil."
+                    );
+
+
+                    window.location.href =
+                        "admin-gallery.html";
+
+                }
+            );
+
+
+        /* ==================================================
+           INITIALIZE
+        ================================================== */
+
+        async function initAdminGallery() {
+
+            const session =
+                await checkAdminSession();
+
+
+            if (!session) return;
+
+
+            await loadAdminGallery();
+
+            await loadGalleryIds();
+
+        }
+
+
+        initAdminGallery();
+
+    </script>
+
+</body>
+
+</html>

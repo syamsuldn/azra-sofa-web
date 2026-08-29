@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Gallery — AZRA SOFA</title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- SUPABASE -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- SUPABASE CONFIG -->
+
+    <script src="js/supabase-config.js"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f7f3ed;
+
+            color: #252321;
+
+            font-family: "Montserrat", sans-serif;
+
+            padding: 20px;
+
+        }
+
+
+        .admin-login {
+
+            width: 100%;
+            max-width: 430px;
+
+            background: #ffffff;
+
+            padding: 45px 40px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 15px 45px rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .admin-logo {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .admin-logo h1 {
+
+            color: #6b4f3a;
+
+            font-size: 28px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .admin-logo p {
+
+            margin-top: 8px;
+
+            font-family: "Playfair Display", serif;
+
+            color: #777;
+
+            font-size: 15px;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-family: "Montserrat", sans-serif;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .form-group input:focus {
+
+            border-color: #a77b5d;
+
+            box-shadow:
+                0 0 0 3px rgba(167, 123, 93, 0.12);
+
+        }
+
+
+        .login-button {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 14px;
+
+            border-radius: 8px;
+
+            background: #a77b5d;
+
+            color: #ffffff;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .login-button:hover {
+
+            background: #6b4f3a;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        .login-button:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+        }
+
+
+        .message {
+
+            margin-top: 18px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            display: none;
+
+        }
+
+
+        .message.error {
+
+            display: block;
+
+            background: #fce8e6;
+
+            color: #a33a2b;
+
+        }
+
+
+        .message.success {
+
+            display: block;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .admin-login {
+
+                padding: 35px 25px;
+
+            }
+
+            .admin-logo h1 {
+
+                font-size: 24px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <main class="admin-login">
+
+
+        <div class="admin-logo">
+
+            <h1>AZRA SOFA</h1>
+
+            <p>Gallery Administration</p>
+
+        </div>
+
+
+        <form id="adminLoginForm">
+
+
+            <div class="form-group">
+
+                <label for="adminEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="adminEmail"
+                    placeholder="Email admin"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="adminPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="adminPassword"
+                    placeholder="Password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-button"
+                id="loginButton"
+            >
+                Login
+            </button>
+
+
+            <div
+                id="loginMessage"
+                class="message"
+            ></div>
+
+
+        </form>
+
+
+    </main>
+
+
+    <script>
+
+        /* ==================================================
+           ADMIN LOGIN
+        ================================================== */
+
+
+        const loginForm =
+            document.getElementById(
+                "adminLoginForm"
+            );
+
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        const loginMessage =
+            document.getElementById(
+                "loginMessage"
+            );
+
+
+        function showMessage(
+            message,
+            type = "error"
+        ) {
+
+            loginMessage.textContent =
+                message;
+
+            loginMessage.className =
+                `message ${type}`;
+
+        }
+
+
+        /* ==================================================
+           CEK SESSION
+        ================================================== */
+
+        async function checkAdminSession() {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .auth
+                    .getSession();
+
+
+            if (error) {
+
+                console.error(
+                    "Gagal mengecek session:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            if (data.session) {
+
+                console.log(
+                    "✅ Admin sudah login:",
+                    data.session.user
+                );
+
+                showMessage(
+                    "Session admin ditemukan.",
+                    "success"
+                );
+
+            }
+
+        }
+
+
+        checkAdminSession();
+
+
+        /* ==================================================
+           LOGIN
+        ================================================== */
+
+        loginForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document.getElementById(
+                        "adminEmail"
+                    ).value.trim();
+
+
+                const password =
+                    document.getElementById(
+                        "adminPassword"
+                    ).value;
+
+
+                loginButton.disabled =
+                    true;
+
+                loginButton.textContent =
+                    "Login...";
+
+
+                loginMessage.className =
+                    "message";
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signInWithPassword({
+
+                            email:
+                                email,
+
+                            password:
+                                password
+
+                        });
+
+
+                if (error) {
+
+                    console.error(
+                        "❌ Login gagal:",
+                        error
+                    );
+
+                    showMessage(
+                        "Login gagal. Periksa email dan password."
+                    );
+
+                    loginButton.disabled =
+                        false;
+
+                    loginButton.textContent =
+                        "Login";
+
+                    return;
+
+                }
+
+
+                console.log(
+                    "✅ Login berhasil:",
+                    data.user
+                );
+
+
+                showMessage(
+                    "Login berhasil. Membuka Admin Gallery...",
+                    "success"
+                );
+
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "admin-gallery-panel.html";
+
+                }, 800);
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

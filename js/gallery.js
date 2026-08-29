@@ -1419,7 +1419,7 @@ async function getGalleryItemById(id) {
             .from("gallery")
             .select("*")
             .eq("id", id)
-            .single();
+            .maybeSingle();
 
 
     if (error) {
@@ -1427,6 +1427,17 @@ async function getGalleryItemById(id) {
         console.warn(
             `⚠️ Gagal mengambil Gallery "${id}":`,
             error
+        );
+
+        return null;
+
+    }
+
+
+    if (!data) {
+
+        console.log(
+            `ℹ️ Gallery "${id}" tidak ditemukan.`
         );
 
         return null;
@@ -1458,7 +1469,6 @@ async function getGalleryItemById(id) {
     };
 
 }
-
 
 /* ================= CREATE ================= */
 
@@ -1717,18 +1727,34 @@ async function updateGalleryItem(id, updates) {
 
 async function removeGalleryItem(id) {
 
-    const { error } =
+    const { data, error } =
         await supabaseClient
             .from("gallery")
             .delete()
-            .eq("id", id);
+            .eq("id", id)
+            .select();
 
+
+    /* ================= ERROR ================= */
 
     if (error) {
 
         console.error(
             `❌ Gagal menghapus Gallery "${id}":`,
             error
+        );
+
+        return false;
+
+    }
+
+
+    /* ================= TIDAK ADA DATA ================= */
+
+    if (!data || data.length === 0) {
+
+        console.warn(
+            `⚠️ Gallery "${id}" tidak ditemukan atau tidak dapat dihapus.`
         );
 
         return false;
@@ -1759,7 +1785,8 @@ async function removeGalleryItem(id) {
 
 
     console.log(
-        `✅ Gallery "${id}" berhasil dihapus.`
+        `✅ Gallery "${id}" berhasil dihapus.`,
+        data[0]
     );
 
 
