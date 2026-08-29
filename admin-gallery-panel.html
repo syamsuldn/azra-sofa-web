@@ -928,6 +928,7 @@
         ================================================== */
 
         let editingGalleryId = null;
+        let editingGalleryImageUrl = null;
 
         let selectedGalleryFile = null;
 
@@ -1590,6 +1591,8 @@
             editingGalleryId =
                 data.id;
 
+            editingGalleryImageUrl =
+                data.image_url;
 
             /* ================= ISI FORM ================= */
 
@@ -1599,10 +1602,26 @@
                 data.id;
 
 
-            document.getElementById(
-                "galleryImage"
-            ).value =
+            selectedGalleryFile = null;
+
+            const galleryImageInfo =
+                document.getElementById(
+                    "galleryImageInfo"
+                );
+
+            galleryImageInfo.textContent =
+                "Gambar saat ini digunakan. Pilih gambar baru jika ingin menggantinya.";
+
+            const galleryImagePreview =
+                document.getElementById(
+                    "galleryImagePreview"
+                );
+
+            galleryImagePreview.src =
                 data.image_url;
+
+            galleryImagePreview.style.display =
+                "block";
 
 
             document.getElementById(
@@ -1717,7 +1736,7 @@
         function resetGalleryForm() {
 
             editingGalleryId = null;
-
+            editingGalleryImageUrl = null;
             selectedGalleryFile = null;
 
             document.getElementById(
@@ -2209,10 +2228,73 @@ GALLERY IMAGE FILE
 
 
                 /* ==================================================
-                   MODE EDIT → UPDATE
-                ================================================== */
+   MODE EDIT → UPDATE
+================================================== */
 
                 if (editingGalleryId) {
+
+                    /* ================= IMAGE URL ================= */
+
+                    let imageUrl =
+                        editingGalleryImageUrl;
+
+
+                    /* ================= UPLOAD GAMBAR BARU ================= */
+
+                    if (selectedGalleryFile) {
+
+                        saveButton.textContent =
+                            "Mengupload...";
+
+                        showGalleryFormMessage(
+                            "Sedang mengupload gambar baru...",
+                            "success"
+                        );
+
+
+                        const uploadedImageUrl =
+                            await uploadGalleryImage(
+                                selectedGalleryFile
+                            );
+
+
+                        /* ================= UPLOAD GAGAL ================= */
+
+                        if (!uploadedImageUrl) {
+
+                            showGalleryFormMessage(
+                                "Gagal mengupload gambar baru. Gallery belum diperbarui.",
+                                "error"
+                            );
+
+
+                            saveButton.disabled =
+                                false;
+
+                            saveButton.textContent =
+                                "Update Gallery";
+
+                            return;
+
+                        }
+
+
+                        imageUrl =
+                            uploadedImageUrl;
+
+                    }
+
+
+                    /* ================= UPDATE DATABASE ================= */
+
+                    saveButton.textContent =
+                        "Mengupdate...";
+
+                    showGalleryFormMessage(
+                        "Sedang menyimpan perubahan Gallery...",
+                        "success"
+                    );
+
 
                     const {
                         data,
@@ -2222,11 +2304,14 @@ GALLERY IMAGE FILE
                             .from("gallery")
                             .update({
 
-                                image_url: image,
+                                image_url:
+                                    imageUrl,
 
-                                category: category,
+                                category:
+                                    category,
 
-                                title: title,
+                                title:
+                                    title,
 
                                 caption:
                                     caption ||
