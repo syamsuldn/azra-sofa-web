@@ -1046,14 +1046,14 @@
                 <div class="gallery-id-wrapper">
 
                     <input type="text" id="galleryId" placeholder="Pilih kategori terlebih dahulu" autocomplete="off"
-                        required disabled>
+                        required disabled readonly>
 
                     <div id="galleryIdSuggestions" class="gallery-id-suggestions"></div>
 
                 </div>
 
                 <small id="galleryIdInfo" class="gallery-image-info">
-                    ID akan tersedia setelah kategori dipilih.
+                    ID akan dibuat otomatis setelah kategori dipilih.
                 </small>
 
             </div>
@@ -1628,30 +1628,26 @@
 
 
         /* ==================================================
-           CATEGORY CHANGE
-        ================================================== */
+   CATEGORY CHANGE
+================================================== */
 
         galleryCategory.addEventListener(
             "change",
             function () {
 
-                const category =
-                    this.value;
+                const category = this.value;
 
-
-                /*
-                   Belum pilih kategori
-                */
+                /* ==========================================
+                   BELUM PILIH KATEGORI
+                ========================================== */
 
                 if (!category) {
 
                     galleryIdInput.value = "";
 
-                    galleryIdInput.disabled =
-                        true;
+                    galleryIdInput.disabled = true;
 
-                    galleryIdInput.readOnly =
-                        false;
+                    galleryIdInput.readOnly = true;
 
                     galleryIdInput.placeholder =
                         "Pilih kategori terlebih dahulu";
@@ -1659,228 +1655,95 @@
                     galleryIdInfo.textContent =
                         "ID akan tersedia setelah kategori dipilih.";
 
-                    galleryIdSuggestions.classList.remove(
-                        "active"
-                    );
+                    galleryIdSuggestions.classList.remove("active");
 
-                    galleryIdSuggestions.innerHTML =
-                        "";
+                    galleryIdSuggestions.innerHTML = "";
 
                     return;
-
                 }
 
 
-                /*
-                   Mode EDIT
-                */
+                /* ==========================================
+                   MODE EDIT
+                ========================================== */
 
                 if (editingGalleryId) {
 
-                    galleryIdInput.disabled =
-                        false;
+                    galleryIdInput.disabled = false;
 
-                    galleryIdInput.readOnly =
-                        true;
+                    galleryIdInput.readOnly = true;
+
+                    galleryIdInput.value =
+                        editingGalleryId;
+
+                    galleryIdInput.placeholder =
+                        editingGalleryId;
 
                     galleryIdInfo.textContent =
                         "ID Gallery tidak dapat diubah saat Edit.";
 
-                    galleryIdSuggestions.classList.remove(
-                        "active"
-                    );
+                    galleryIdSuggestions.classList.remove("active");
+
+                    galleryIdSuggestions.innerHTML = "";
 
                     return;
-
                 }
 
 
-                /*
-                   Mode TAMBAH
-                */
-
-                const prefix =
-                    galleryIdPrefixMap[category];
-
-
-                galleryIdInput.disabled =
-                    false;
-
-                galleryIdInput.readOnly =
-                    false;
-
-                galleryIdInput.placeholder =
-                    `${prefix}-001`;
-
-
-                /*
-                   Tampilkan rekomendasi
-                */
+                /* ==========================================
+                   MODE TAMBAH
+                ========================================== */
 
                 const recommendedId =
-                    getNextAvailableGalleryId(
-                        category
-                    );
-
-
-                if (recommendedId) {
-
-                    galleryIdInfo.textContent =
-                        `ID tersedia. Rekomendasi: ${recommendedId}`;
-
-                }
-
-
-                /*
-                   Buka dropdown otomatis
-                */
-
-                showGalleryIdSuggestions();
-
-            }
-        );
-
-
-        /* ==================================================
-           INPUT ID
-        ================================================== */
-
-        galleryIdInput.addEventListener(
-            "input",
-            function () {
-
-                showGalleryIdSuggestions();
-
-            }
-        );
-
-
-        /* ==================================================
-           FOCUS ID
-        ================================================== */
-
-        galleryIdInput.addEventListener(
-            "focus",
-            function () {
-
-                showGalleryIdSuggestions();
-
-            }
-        );
-
-
-        /* ==================================================
-           ENTER / TAB
-           → PILIH ID REKOMENDASI
-        ================================================== */
-
-        galleryIdInput.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (
-                    event.key !== "Enter" &&
-                    event.key !== "Tab"
-                ) {
-
-                    return;
-
-                }
-
-
-                const category =
-                    galleryCategory.value;
-
-
-                if (!category) {
-                    return;
-                }
-
-
-                const recommendedId =
-                    getNextAvailableGalleryId(
-                        category
-                    );
+                    getNextAvailableGalleryId(category);
 
 
                 if (!recommendedId) {
+
+                    galleryIdInput.value = "";
+
+                    galleryIdInput.disabled = true;
+
+                    galleryIdInput.readOnly = true;
+
+                    galleryIdInfo.textContent =
+                        "Gagal menentukan ID Gallery.";
+
                     return;
                 }
 
 
-                const currentValue =
-                    galleryIdInput.value
-                        .trim()
-                        .toLowerCase();
+                /* ==========================================
+                   LANGSUNG ISI ID
+                ========================================== */
+
+                galleryIdInput.value =
+                    recommendedId;
 
 
-                /*
-                   Jika admin sedang mengetik:
-        
-                   custom
-        
-                   maka Enter / Tab akan
-                   mengubahnya menjadi:
-        
-                   custom-010
-                */
+                /* ==========================================
+                   ID TIDAK DAPAT DIUBAH
+                ========================================== */
 
-                if (
-                    currentValue !==
-                    recommendedId.toLowerCase()
-                ) {
+                galleryIdInput.disabled = false;
 
-                    galleryIdInput.value =
-                        recommendedId;
+                galleryIdInput.readOnly = true;
+
+                galleryIdInput.placeholder =
+                    recommendedId;
 
 
-                    galleryIdInfo.textContent =
-                        `ID ${recommendedId} dipilih.`;
+                galleryIdInfo.textContent =
+                    `ID otomatis: ${recommendedId}`;
 
 
-                    galleryIdSuggestions.classList.remove(
-                        "active"
-                    );
+                /* ==========================================
+                   PASTIKAN DROPDOWN TERTUTUP
+                ========================================== */
 
+                galleryIdSuggestions.classList.remove("active");
 
-                    /*
-                       Enter menghentikan submit.
-                       Tab tetap berpindah ke field berikutnya.
-                    */
-
-                    if (
-                        event.key === "Enter"
-                    ) {
-
-                        event.preventDefault();
-
-                    }
-
-                }
-
-            }
-        );
-
-
-        /* ==================================================
-           CLOSE SUGGESTIONS
-        ================================================== */
-
-        document.addEventListener(
-            "click",
-            function (event) {
-
-                if (
-                    !event.target.closest(
-                        ".gallery-id-wrapper"
-                    )
-                ) {
-
-                    galleryIdSuggestions.classList.remove(
-                        "active"
-                    );
-
-                }
+                galleryIdSuggestions.innerHTML = "";
 
             }
         );
@@ -2280,10 +2143,11 @@
 
             /* ================= REFRESH ================= */
 
+            await loadGalleryIds();
+
             await loadAdminGallery(
                 "Gallery berhasil dihapus."
             );
-
         }
 
         /* ==================================================
@@ -2518,80 +2382,86 @@
         function resetGalleryForm() {
 
             editingGalleryId = null;
+
             editingGalleryImageUrl = null;
+
             selectedGalleryFile = null;
 
-            document.getElementById(
-                "galleryImage"
-            ).value = "";
 
-            document.getElementById(
-                "galleryImageInfo"
-            ).textContent =
+            /* ==========================================
+               RESET FORM
+            ========================================== */
+
+            document
+                .getElementById("galleryForm")
+                .reset();
+
+
+            /* ==========================================
+               RESET IMAGE
+            ========================================== */
+
+            document
+                .getElementById("galleryImage")
+                .value = "";
+
+
+            document
+                .getElementById("galleryImageInfo")
+                .textContent =
                 "Pilih gambar dari komputer.";
+
 
             const preview =
                 document.getElementById(
                     "galleryImagePreview"
                 );
 
+
             preview.src = "";
 
-            preview.style.display =
-                "none";
-
-            document.getElementById(
-                "galleryForm"
-            ).reset();
+            preview.style.display = "none";
 
 
-            document.getElementById(
-                "galleryId"
-            ).readOnly = false;
+            /* ==========================================
+               RESET CATEGORY
+            ========================================== */
 
-            document.getElementById(
-                "galleryId"
-            ).disabled = true;
+            galleryCategory.value = "";
 
-            document.getElementById(
-                "galleryId"
-            ).value = "";
 
-            document.getElementById(
-                "galleryId"
-            ).placeholder =
+            /* ==========================================
+               RESET ID
+            ========================================== */
+
+            galleryIdInput.value = "";
+
+            galleryIdInput.disabled = true;
+
+            galleryIdInput.readOnly = true;
+
+            galleryIdInput.placeholder =
                 "Pilih kategori terlebih dahulu";
 
-            document.getElementById(
-                "galleryIdInfo"
-            ).textContent =
+
+            galleryIdInfo.textContent =
                 "ID akan tersedia setelah kategori dipilih.";
 
-            document.getElementById(
-                "galleryCategory"
-            ).value = "";
 
-            document.getElementById(
-                "galleryId"
-            ).value = "";
+            /* ==========================================
+               RESET SUGGESTIONS
+            ========================================== */
 
-            document.getElementById(
-                "galleryId"
-            ).disabled = true;
+            galleryIdSuggestions.classList.remove(
+                "active"
+            );
 
-            document.getElementById(
-                "galleryId"
-            ).readOnly = false;
+            galleryIdSuggestions.innerHTML = "";
 
-            document.getElementById(
-                "galleryId"
-            ).placeholder =
-                "Pilih kategori terlebih dahulu";
 
-            document.getElementById(
-                "galleryIdInfo"
-            ).textContent =
-                "ID akan tersedia setelah kategori dipilih.";
+            /* ==========================================
+               RESET FORM TITLE
+            ========================================== */
 
             document.querySelector(
                 ".gallery-form-header h2"
@@ -2599,11 +2469,19 @@
                 "Tambah Gallery";
 
 
+            /* ==========================================
+               RESET BUTTON
+            ========================================== */
+
             document.querySelector(
                 ".save-gallery-button"
             ).textContent =
                 "Simpan Gallery";
 
+
+            /* ==========================================
+               RESET MESSAGE
+            ========================================== */
 
             const message =
                 document.getElementById(
@@ -2614,9 +2492,7 @@
             message.className =
                 "gallery-form-message";
 
-
-            message.textContent =
-                "";
+            message.textContent = "";
 
         }
 
@@ -2996,44 +2872,65 @@ GALLERY IMAGE FILE
 
                 if (
                     !id ||
-                    !image ||
                     !title ||
                     !category
-                ) {/* ==================================================
-   CEK ID DUPLIKAT
-================================================== */
+                ) {
 
-                    if (!editingGalleryId) {
+                    showGalleryFormMessage(
+                        "Mohon lengkapi data Gallery terlebih dahulu.",
+                        "error"
+                    );
 
-                        const duplicate =
-                            galleryIds.some(
-                                existingId =>
-                                    existingId.toLowerCase() ===
-                                    id.toLowerCase()
-                            );
+                    return;
 
-
-                        if (duplicate) {
-
-                            showGalleryFormMessage(
-                                `ID Gallery "${id}" sudah digunakan. Silakan gunakan ID lain.`,
-                                "error"
-                            );
-
-
-                            document
-                                .getElementById("galleryId")
-                                .focus();
-
-
-                            return;
-
-                        }
-
-                    }
                 }
 
 
+                /* ==================================================
+                   CEK GAMBAR
+                ================================================== */
+
+                if (
+                    !editingGalleryId &&
+                    !selectedGalleryFile
+                ) {
+
+                    showGalleryFormMessage(
+                        "Silakan pilih gambar terlebih dahulu.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                /* ==================================================
+                   CEK ID DUPLIKAT
+                ================================================== */
+
+                if (!editingGalleryId) {
+
+                    const duplicate =
+                        galleryIds.some(
+                            item =>
+                                item.id.toLowerCase() ===
+                                id.toLowerCase()
+                        );
+
+
+                    if (duplicate) {
+
+                        showGalleryFormMessage(
+                            `ID Gallery "${id}" sudah digunakan. Silakan coba lagi.`,
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+                }
                 /* ==================================================
                    BUTTON
                 ================================================== */
@@ -3193,7 +3090,19 @@ GALLERY IMAGE FILE
                     );
 
 
-                    /* ================= REFRESH ================= */
+                    /* ================= REFRESH DATA ================= */
+
+                    /*
+                       Refresh daftar ID terlebih dahulu
+                       agar Smart ID menggunakan data terbaru.
+                    */
+
+                    await loadGalleryIds();
+
+                    /*
+                       Setelah ID terbaru dimuat,
+                       refresh daftar Gallery.
+                    */
 
                     await loadAdminGallery();
 
