@@ -14,10 +14,10 @@ let galleryItems =
 
 const galleryContainer =
     document.querySelector(".gallery-grid-container");
-    
 
-    /* ==================================================
-   LOAD GALLERY FROM SUPABASE
+
+/* ==================================================
+LOAD GALLERY FROM SUPABASE
 ================================================== */
 
 async function loadGalleryFromSupabase() {
@@ -30,9 +30,6 @@ async function loadGalleryFromSupabase() {
                 ascending: true
             });
 
-
-    /* ================= ERROR ================= */
-
     if (error) {
 
         console.error(
@@ -41,11 +38,7 @@ async function loadGalleryFromSupabase() {
         );
 
         return false;
-
     }
-
-
-    /* ================= DATA ================= */
 
     galleryData =
         data.map(item => ({
@@ -78,12 +71,17 @@ async function loadGalleryFromSupabase() {
     );
 
 
-    /* ================= RENDER ================= */
+    /* VALIDASI SETELAH DATA MASUK */
+
+    validateGalleryData();
+
+    validateGalleryImages();
+
+
+    /* RENDER */
 
     renderGallery();
 
-
-    /* ================= UPDATE REFERENSI ================= */
 
     galleryItems =
         document.querySelectorAll(
@@ -95,7 +93,6 @@ async function loadGalleryFromSupabase() {
 
 
     return true;
-
 }
 
 function createGalleryItem(item) {
