@@ -745,6 +745,190 @@
             }
 
         }
+
+        /* ==================================================
+   ADD GALLERY CARD
+================================================== */
+
+        .add-gallery-card {
+            min-height: 100%;
+            min-height: 320px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 2px dashed #c9b19e;
+            border-radius: 14px;
+
+            background: rgba(167, 123, 93, 0.04);
+
+            cursor: pointer;
+
+            transition:
+                0.25s ease;
+        }
+
+        .add-gallery-card:hover {
+            background: rgba(167, 123, 93, 0.10);
+
+            border-color: #a77b5d;
+
+            transform: translateY(-3px);
+        }
+
+        .add-gallery-card-content {
+            text-align: center;
+            color: #a77b5d;
+        }
+
+        .add-gallery-card-icon {
+            width: 52px;
+            height: 52px;
+
+            margin: 0 auto 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #a77b5d;
+            color: #ffffff;
+
+            font-size: 30px;
+            font-weight: 400;
+
+            transition: 0.25s ease;
+        }
+
+        .add-gallery-card:hover .add-gallery-card-icon {
+            background: #6b4f3a;
+
+            transform: scale(1.08);
+        }
+
+        .add-gallery-card-content h3 {
+            margin-bottom: 6px;
+
+            color: #6b4f3a;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 15px;
+        }
+
+        .add-gallery-card-content p {
+            color: #888;
+
+            font-family: "Playfair Display", serif;
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+   FLOATING ADD GALLERY BUTTON
+================================================== */
+
+        .floating-add-gallery-button {
+
+            position: fixed;
+
+            right: 24px;
+
+            bottom: 24px;
+
+            width: 52px;
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: #a77b5d;
+
+            color: #ffffff;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 28px;
+
+            font-weight: 500;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.18);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform:
+                translateY(15px) scale(0.9);
+
+            transition:
+                opacity 0.25s ease,
+                visibility 0.25s ease,
+                transform 0.25s ease,
+                background 0.25s ease;
+
+            z-index: 9999;
+        }
+
+
+        .floating-add-gallery-button.visible {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateY(0) scale(1);
+
+        }
+
+
+        .floating-add-gallery-button:hover {
+
+            background: #6b4f3a;
+
+            transform:
+                translateY(-3px) scale(1.03);
+
+        }
+
+
+        /* ==================================================
+   MOBILE
+================================================== */
+
+        @media (max-width: 520px) {
+
+            .floating-add-gallery-button {
+
+                width: 48px;
+
+                height: 48px;
+
+                right: 18px;
+
+                bottom: 18px;
+
+                font-size: 25px;
+
+            }
+
+        }
     </style>
 
 </head>
@@ -791,27 +975,14 @@
 
         <form id="galleryForm">
 
-            <div class="form-group">
-
-                <label for="galleryId">
-                    ID Gallery
-                </label>
-
-                <div class="gallery-id-wrapper">
-
-                    <input type="text" id="galleryId" placeholder="Contoh: custom-010" autocomplete="off" required>
-
-                    <div id="galleryIdSuggestions" class="gallery-id-suggestions"></div>
-
-                </div>
-
-            </div>
-
+            <!-- ==================================================
+         1. GAMBAR GALLERY
+    ================================================== -->
 
             <div class="form-group">
 
                 <label for="galleryImage">
-                    Gambar Gallery
+                    1. Gambar Gallery
                 </label>
 
                 <input type="file" id="galleryImage" accept="image/*">
@@ -825,21 +996,14 @@
             </div>
 
 
-            <div class="form-group">
-
-                <label for="galleryTitle">
-                    Judul
-                </label>
-
-                <input type="text" id="galleryTitle" placeholder="Judul sofa" required>
-
-            </div>
-
+            <!-- ==================================================
+         2. KATEGORI
+    ================================================== -->
 
             <div class="form-group">
 
                 <label for="galleryCategory">
-                    Kategori
+                    2. Kategori
                 </label>
 
                 <select id="galleryCategory" required>
@@ -862,19 +1026,72 @@
 
                 </select>
 
+                <small class="gallery-image-info">
+                    Pilih kategori terlebih dahulu untuk menentukan ID Gallery.
+                </small>
+
             </div>
 
+
+            <!-- ==================================================
+         3. ID GALLERY
+    ================================================== -->
+
+            <div class="form-group">
+
+                <label for="galleryId">
+                    3. ID Gallery
+                </label>
+
+                <div class="gallery-id-wrapper">
+
+                    <input type="text" id="galleryId" placeholder="Pilih kategori terlebih dahulu" autocomplete="off"
+                        required disabled>
+
+                    <div id="galleryIdSuggestions" class="gallery-id-suggestions"></div>
+
+                </div>
+
+                <small id="galleryIdInfo" class="gallery-image-info">
+                    ID akan tersedia setelah kategori dipilih.
+                </small>
+
+            </div>
+
+
+            <!-- ==================================================
+         4. JUDUL
+    ================================================== -->
+
+            <div class="form-group">
+
+                <label for="galleryTitle">
+                    4. Judul
+                </label>
+
+                <input type="text" id="galleryTitle" placeholder="Contoh: Sofa L Minimalis" required>
+
+            </div>
+
+
+            <!-- ==================================================
+         5. CAPTION
+    ================================================== -->
 
             <div class="form-group">
 
                 <label for="galleryCaption">
-                    Caption
+                    5. Caption
                 </label>
 
                 <textarea id="galleryCaption" rows="4" placeholder="Deskripsi singkat gallery..."></textarea>
 
             </div>
 
+
+            <!-- ==================================================
+         6. ACTION
+    ================================================== -->
 
             <div class="form-actions">
 
@@ -888,6 +1105,10 @@
 
             </div>
 
+
+            <!-- ==================================================
+         FORM MESSAGE
+    ================================================== -->
 
             <div id="galleryFormMessage" class="gallery-form-message"></div>
 
@@ -932,20 +1153,40 @@
 
         let selectedGalleryFile = null;
 
+
         /* ==================================================
-           GALLERY ID SUGGESTIONS
+           GALLERY ID SYSTEM
         ================================================== */
 
         const galleryIdInput =
             document.getElementById("galleryId");
 
-        const galleryIdSuggestions =
-            document.getElementById(
-                "galleryIdSuggestions"
-            );
+        const galleryCategory =
+            document.getElementById("galleryCategory");
 
+        const galleryIdSuggestions =
+            document.getElementById("galleryIdSuggestions");
+
+        const galleryIdInfo =
+            document.getElementById("galleryIdInfo");
+
+
+        /* ==================================================
+           GALLERY ID STATE
+        ================================================== */
 
         let galleryIds = [];
+
+
+        /* ==================================================
+           CATEGORY → ID PREFIX
+        ================================================== */
+
+        const galleryIdPrefixMap = {
+            custom: "custom",
+            repair: "repair",
+            details: "detail"
+        };
 
 
         /* ==================================================
@@ -960,13 +1201,10 @@
             } =
                 await supabaseClient
                     .from("gallery")
-                    .select("id")
-                    .order(
-                        "id",
-                        {
-                            ascending: true
-                        }
-                    );
+                    .select("id, category")
+                    .order("id", {
+                        ascending: true
+                    });
 
 
             if (error) {
@@ -976,15 +1214,23 @@
                     error
                 );
 
+                galleryIds = [];
+
                 return;
 
             }
 
 
-            galleryIds =
-                data.map(
-                    item => item.id
-                );
+            /*
+               Simpan dalam bentuk object:
+        
+               {
+                   id: "custom-001",
+                   category: "custom"
+               }
+            */
+
+            galleryIds = data || [];
 
 
             console.log(
@@ -996,12 +1242,105 @@
 
 
         /* ==================================================
-           SHOW ID SUGGESTIONS
+           GET IDS BY CATEGORY
+        ================================================== */
+
+        function getGalleryIdsByCategory(category) {
+
+            const prefix =
+                galleryIdPrefixMap[category];
+
+            if (!prefix) {
+                return [];
+            }
+
+
+            return galleryIds
+                .map(item => item.id)
+                .filter(id => {
+
+                    return id
+                        .toLowerCase()
+                        .startsWith(
+                            prefix.toLowerCase() + "-"
+                        );
+
+                });
+
+        }
+
+
+        /* ==================================================
+           GET NEXT AVAILABLE ID
+        ================================================== */
+
+        function getNextAvailableGalleryId(category) {
+
+            const prefix =
+                galleryIdPrefixMap[category];
+
+            if (!prefix) {
+                return null;
+            }
+
+
+            const categoryIds =
+                getGalleryIdsByCategory(category);
+
+
+            const usedNumbers =
+                categoryIds
+                    .map(id => {
+
+                        const match =
+                            id.match(
+                                new RegExp(
+                                    `^${prefix}-(\\d+)$`,
+                                    "i"
+                                )
+                            );
+
+                        return match
+                            ? parseInt(match[1], 10)
+                            : null;
+
+                    })
+                    .filter(
+                        number =>
+                            number !== null &&
+                            !isNaN(number)
+                    );
+
+
+            let nextNumber = 1;
+
+
+            while (
+                usedNumbers.includes(nextNumber)
+            ) {
+
+                nextNumber++;
+
+            }
+
+
+            return (
+                `${prefix}-` +
+                String(nextNumber).padStart(3, "0")
+            );
+
+        }
+
+
+        /* ==================================================
+           SHOW GALLERY ID SUGGESTIONS
         ================================================== */
 
         function showGalleryIdSuggestions() {
 
-            /* Jangan tampilkan suggestion ketika EDIT */
+            /*
+               Jangan tampilkan saat EDIT
+            */
 
             if (editingGalleryId) {
 
@@ -1014,16 +1353,15 @@
             }
 
 
-            const keyword =
-                galleryIdInput
-                    .value
-                    .trim()
-                    .toLowerCase();
+            const category =
+                galleryCategory.value;
 
 
-            /* Belum mengetik apa-apa */
+            /*
+               Belum pilih kategori
+            */
 
-            if (!keyword) {
+            if (!category) {
 
                 galleryIdSuggestions.classList.remove(
                     "active"
@@ -1036,93 +1374,251 @@
             }
 
 
-            /* Cari ID yang mengandung keyword */
-
-            const matches =
-                galleryIds.filter(
-                    id =>
-                        id
-                            .toLowerCase()
-                            .includes(keyword)
-                );
+            const prefix =
+                galleryIdPrefixMap[category];
 
 
-            galleryIdSuggestions.innerHTML = "";
+            if (!prefix) {
 
-
-            /* ================= TITLE ================= */
-
-            const title =
-                document.createElement("div");
-
-            title.className =
-                "gallery-id-suggestion-title";
-
-            title.textContent =
-                matches.length
-                    ? "ID Gallery yang sudah digunakan"
-                    : "Belum ada ID yang cocok";
-
-            galleryIdSuggestions.appendChild(
-                title
-            );
-
-
-            /* ================= EMPTY ================= */
-
-            if (!matches.length) {
-
-                const empty =
-                    document.createElement("div");
-
-                empty.className =
-                    "gallery-id-empty";
-
-                empty.textContent =
-                    "ID ini belum digunakan.";
-
-                galleryIdSuggestions.appendChild(
-                    empty
-                );
+                return;
 
             }
 
 
-            /* ================= MATCHES ================= */
+            /*
+               Ambil semua ID kategori
+            */
 
-            matches.forEach(id => {
+            const categoryIds =
+                getGalleryIdsByCategory(category);
 
-                const item =
+
+            /*
+               Urutkan berdasarkan nomor
+            */
+
+            const numberedIds =
+                categoryIds
+                    .map(id => {
+
+                        const match =
+                            id.match(
+                                new RegExp(
+                                    `^${prefix}-(\\d+)$`,
+                                    "i"
+                                )
+                            );
+
+                        if (!match) {
+                            return null;
+                        }
+
+                        return {
+                            id: id,
+                            number: parseInt(
+                                match[1],
+                                10
+                            )
+                        };
+
+                    })
+                    .filter(Boolean)
+                    .sort(
+                        (a, b) =>
+                            a.number - b.number
+                    );
+
+
+            /*
+               Cari nomor yang kosong.
+        
+               Contoh:
+        
+               custom-001
+               custom-003
+               custom-004
+        
+               Maka:
+               custom-002
+            */
+
+            let availableNumber = 1;
+
+
+            for (
+                const item of numberedIds
+            ) {
+
+                if (
+                    item.number ===
+                    availableNumber
+                ) {
+
+                    availableNumber++;
+
+                } else if (
+                    item.number >
+                    availableNumber
+                ) {
+
+                    break;
+
+                }
+
+            }
+
+
+            const recommendedId =
+                `${prefix}-${String(
+                    availableNumber
+                ).padStart(3, "0")}`;
+
+
+            /*
+               Ambil 5 ID terakhir
+            */
+
+            const lastFiveIds =
+                [...numberedIds]
+                    .sort(
+                        (a, b) =>
+                            b.number - a.number
+                    )
+                    .slice(0, 5);
+
+
+            /*
+               Bersihkan dropdown
+            */
+
+            galleryIdSuggestions.innerHTML = "";
+
+
+            /*
+               ==============================
+               RECOMMENDATION
+               ==============================
+            */
+
+            const recommendationTitle =
+                document.createElement("div");
+
+            recommendationTitle.className =
+                "gallery-id-suggestion-title";
+
+            recommendationTitle.textContent =
+                "ID yang direkomendasikan";
+
+            galleryIdSuggestions.appendChild(
+                recommendationTitle
+            );
+
+
+            const recommendation =
+                document.createElement("div");
+
+            recommendation.className =
+                "gallery-id-suggestion";
+
+            recommendation.innerHTML =
+                `<strong>✨ ${recommendedId}</strong>`;
+
+
+            recommendation.addEventListener(
+                "click",
+                function () {
+
+                    galleryIdInput.value =
+                        recommendedId;
+
+                    galleryIdInfo.textContent =
+                        `ID ${recommendedId} dipilih.`;
+
+                    galleryIdSuggestions.classList.remove(
+                        "active"
+                    );
+
+                    galleryIdInput.focus();
+
+                }
+            );
+
+
+            galleryIdSuggestions.appendChild(
+                recommendation
+            );
+
+
+            /*
+               ==============================
+               5 ID TERAKHIR
+               ==============================
+            */
+
+            if (lastFiveIds.length) {
+
+                const recentTitle =
                     document.createElement("div");
 
-                item.className =
-                    "gallery-id-suggestion";
+                recentTitle.className =
+                    "gallery-id-suggestion-title";
 
-                item.textContent =
-                    id;
+                recentTitle.textContent =
+                    "5 ID terakhir digunakan";
+
+                galleryIdSuggestions.appendChild(
+                    recentTitle
+                );
 
 
-                item.addEventListener(
-                    "click",
-                    function () {
+                lastFiveIds.forEach(
+                    function (item) {
 
-                        galleryIdInput.value =
-                            id;
+                        const suggestion =
+                            document.createElement(
+                                "div"
+                            );
 
-                        galleryIdSuggestions.classList.remove(
-                            "active"
+                        suggestion.className =
+                            "gallery-id-suggestion";
+
+                        suggestion.textContent =
+                            item.id;
+
+
+                        suggestion.addEventListener(
+                            "click",
+                            function () {
+
+                                galleryIdInput.value =
+                                    item.id;
+
+                                galleryIdInfo.textContent =
+                                    `ID ${item.id} dipilih.`;
+
+                                galleryIdSuggestions.classList.remove(
+                                    "active"
+                                );
+
+                                galleryIdInput.focus();
+
+                            }
+                        );
+
+
+                        galleryIdSuggestions.appendChild(
+                            suggestion
                         );
 
                     }
                 );
 
+            }
 
-                galleryIdSuggestions.appendChild(
-                    item
-                );
 
-            });
-
+            /*
+               Tampilkan dropdown
+            */
 
             galleryIdSuggestions.classList.add(
                 "active"
@@ -1132,7 +1628,121 @@
 
 
         /* ==================================================
-           INPUT EVENT
+           CATEGORY CHANGE
+        ================================================== */
+
+        galleryCategory.addEventListener(
+            "change",
+            function () {
+
+                const category =
+                    this.value;
+
+
+                /*
+                   Belum pilih kategori
+                */
+
+                if (!category) {
+
+                    galleryIdInput.value = "";
+
+                    galleryIdInput.disabled =
+                        true;
+
+                    galleryIdInput.readOnly =
+                        false;
+
+                    galleryIdInput.placeholder =
+                        "Pilih kategori terlebih dahulu";
+
+                    galleryIdInfo.textContent =
+                        "ID akan tersedia setelah kategori dipilih.";
+
+                    galleryIdSuggestions.classList.remove(
+                        "active"
+                    );
+
+                    galleryIdSuggestions.innerHTML =
+                        "";
+
+                    return;
+
+                }
+
+
+                /*
+                   Mode EDIT
+                */
+
+                if (editingGalleryId) {
+
+                    galleryIdInput.disabled =
+                        false;
+
+                    galleryIdInput.readOnly =
+                        true;
+
+                    galleryIdInfo.textContent =
+                        "ID Gallery tidak dapat diubah saat Edit.";
+
+                    galleryIdSuggestions.classList.remove(
+                        "active"
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                   Mode TAMBAH
+                */
+
+                const prefix =
+                    galleryIdPrefixMap[category];
+
+
+                galleryIdInput.disabled =
+                    false;
+
+                galleryIdInput.readOnly =
+                    false;
+
+                galleryIdInput.placeholder =
+                    `${prefix}-001`;
+
+
+                /*
+                   Tampilkan rekomendasi
+                */
+
+                const recommendedId =
+                    getNextAvailableGalleryId(
+                        category
+                    );
+
+
+                if (recommendedId) {
+
+                    galleryIdInfo.textContent =
+                        `ID tersedia. Rekomendasi: ${recommendedId}`;
+
+                }
+
+
+                /*
+                   Buka dropdown otomatis
+                */
+
+                showGalleryIdSuggestions();
+
+            }
+        );
+
+
+        /* ==================================================
+           INPUT ID
         ================================================== */
 
         galleryIdInput.addEventListener(
@@ -1146,7 +1756,7 @@
 
 
         /* ==================================================
-           FOCUS EVENT
+           FOCUS ID
         ================================================== */
 
         galleryIdInput.addEventListener(
@@ -1160,8 +1770,124 @@
 
 
         /* ==================================================
+           ENTER / TAB
+           → PILIH ID REKOMENDASI
+        ================================================== */
+
+        galleryIdInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key !== "Enter" &&
+                    event.key !== "Tab"
+                ) {
+
+                    return;
+
+                }
+
+
+                const category =
+                    galleryCategory.value;
+
+
+                if (!category) {
+                    return;
+                }
+
+
+                const recommendedId =
+                    getNextAvailableGalleryId(
+                        category
+                    );
+
+
+                if (!recommendedId) {
+                    return;
+                }
+
+
+                const currentValue =
+                    galleryIdInput.value
+                        .trim()
+                        .toLowerCase();
+
+
+                /*
+                   Jika admin sedang mengetik:
+        
+                   custom
+        
+                   maka Enter / Tab akan
+                   mengubahnya menjadi:
+        
+                   custom-010
+                */
+
+                if (
+                    currentValue !==
+                    recommendedId.toLowerCase()
+                ) {
+
+                    galleryIdInput.value =
+                        recommendedId;
+
+
+                    galleryIdInfo.textContent =
+                        `ID ${recommendedId} dipilih.`;
+
+
+                    galleryIdSuggestions.classList.remove(
+                        "active"
+                    );
+
+
+                    /*
+                       Enter menghentikan submit.
+                       Tab tetap berpindah ke field berikutnya.
+                    */
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        event.preventDefault();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* ==================================================
            CLOSE SUGGESTIONS
         ================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    !event.target.closest(
+                        ".gallery-id-wrapper"
+                    )
+                ) {
+
+                    galleryIdSuggestions.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+        /* ==================================================
+                   CLOSE SUGGESTIONS
+                ================================================== */
 
         document.addEventListener(
             "click",
@@ -1354,6 +2080,62 @@
 
             });
 
+            /* ==================================================
+   ADD GALLERY CARD
+================================================== */
+
+            const addGalleryCard =
+                document.createElement("article");
+
+            addGalleryCard.className =
+                "add-gallery-card";
+
+            addGalleryCard.innerHTML = `
+
+    <div class="add-gallery-card-content">
+
+        <div class="add-gallery-card-icon">
+            +
+        </div>
+
+        <h3>
+            Tambah Gallery
+        </h3>
+
+        <p>
+            Tambahkan karya baru ke Gallery
+        </p>
+
+    </div>
+
+`;
+
+            addGalleryCard.addEventListener(
+                "click",
+                function () {
+
+                    resetGalleryForm();
+
+                    galleryFormContainer.classList.add(
+                        "active"
+                    );
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                }
+            );
+
+            galleryList.appendChild(
+                addGalleryCard
+
+            );
+
+            setupFloatingAddGallery(
+                addGalleryCard
+            );
 
             /* ================= STATUS ================= */
 
@@ -1767,6 +2549,49 @@
                 "galleryId"
             ).readOnly = false;
 
+            document.getElementById(
+                "galleryId"
+            ).disabled = true;
+
+            document.getElementById(
+                "galleryId"
+            ).value = "";
+
+            document.getElementById(
+                "galleryId"
+            ).placeholder =
+                "Pilih kategori terlebih dahulu";
+
+            document.getElementById(
+                "galleryIdInfo"
+            ).textContent =
+                "ID akan tersedia setelah kategori dipilih.";
+
+            document.getElementById(
+                "galleryCategory"
+            ).value = "";
+
+            document.getElementById(
+                "galleryId"
+            ).value = "";
+
+            document.getElementById(
+                "galleryId"
+            ).disabled = true;
+
+            document.getElementById(
+                "galleryId"
+            ).readOnly = false;
+
+            document.getElementById(
+                "galleryId"
+            ).placeholder =
+                "Pilih kategori terlebih dahulu";
+
+            document.getElementById(
+                "galleryIdInfo"
+            ).textContent =
+                "ID akan tersedia setelah kategori dipilih.";
 
             document.querySelector(
                 ".gallery-form-header h2"
@@ -2608,13 +3433,15 @@ GALLERY IMAGE FILE
             const session =
                 await checkAdminSession();
 
-
             if (!session) return;
 
-
-            await loadAdminGallery();
+            /* Muat ID terlebih dahulu agar Smart ID siap digunakan */
 
             await loadGalleryIds();
+
+            /* Setelah ID siap, tampilkan Gallery */
+
+            await loadAdminGallery();
 
         }
 
@@ -2622,6 +3449,12 @@ GALLERY IMAGE FILE
         initAdminGallery();
 
     </script>
+
+    <button id="floatingAddGalleryButton" class="floating-add-gallery-button" type="button" aria-label="Tambah Gallery">
+        +
+    </button>
+
+    <script src="js/admin-gallery.js"></script>
 
 </body>
 
